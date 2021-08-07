@@ -5,16 +5,21 @@
   "main": "./lib/umd/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-cli": "tsc --project ./tsconfig.scripts.json --module commonjs --outDir bin",
     "build-umd": "tsc --module umd --outDir lib/umd",
     "build-cjs": "tsc --module commonjs --outDir lib/cjs",
     "build-es6": "tsc --module ES6 --outDir lib/es6",
     "build-all": "npm run build-umd && npm run build-cjs && npm run build-es6"
   },
+  "bin": "./bin/scripts/cli.js",
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^16.4.13",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "commander": "^8.1.0"
   }
 }

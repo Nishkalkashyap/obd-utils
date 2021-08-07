@@ -1,6 +1,6 @@
 {
     "extends": "./tsconfig.json",
-    "files": ["./scripts/generate-pid-readme.ts"],
+    "files": ["./scripts/cli.ts"],
     "compilerOptions": {
         "baseUrl": "./scripts",
         "declaration": false
