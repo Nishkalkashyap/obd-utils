@@ -1,6 +1,8 @@
 # OBD Utils
 
-The aim of this library is to provide utility methods to make it easier to work with the OBD-II protocol.
+The aim of this library is to provide utility methods to make it easier to work with the OBD-II protocol. This library only provides the interface/helper functions to make it easier to work with the protocol, and **does NOT** provides any bindings/transport to communicate with the underlying hardware.
+
+A large part of the implementation is borrowed from EricSmekens's [node-bluetooth-obd](https://github.com/EricSmekens/node-bluetooth-obd) project.
 
 ## CLI Usage:
 

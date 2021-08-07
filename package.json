@@ -1,6 +1,6 @@
 {
   "name": "obd-utils",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Provides utilities for OBD2",
   "author": "Nishkal <hello@nishkal.in>",
   "repository": "https://github.com/Nishkalkashyap/obd-utils",
@@ -15,7 +15,10 @@
     "obd-utils",
     "obd-parser",
     "elm327",
-    "elm"
+    "elm",
+    "javascript obd",
+    "node obd",
+    "nodejs obd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
