@@ -20,5 +20,5 @@
     ],
     "strict": false,
   },
-  "exclude": ["./lib", "./scripts"]
+  "exclude": ["./lib", "./scripts", "./bin"]
 }
