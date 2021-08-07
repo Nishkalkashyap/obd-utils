@@ -3,6 +3,7 @@
 The aim of this library is to provide utility methods to make it easier to work with the OBD-II protocol.
 
 ## CLI Usage:
+
 ```bash
 # e.g. parse an OBD response
 $ npx obd-utils parse "41 05 3C"
@@ -29,11 +30,12 @@ $ npx obd-utils info 05
 ```
 
 ## Programmatic Usage:
+
 ```ts
-import { parseOBDResponse, getPIDInfo } from 'obd-utils';
+import { parseOBDResponse, getPIDInfo, getAllPIDs } from "obd-utils";
 
 // Parse an OBD response
-const parsedCommand = parseOBDResponse('41 05 3C');
+const parsedCommand = parseOBDResponse("41 05 3C");
 console.log(parsedCommand);
 /**
  * The resulting output will resemble:
@@ -47,7 +49,7 @@ console.log(parsedCommand);
  */
 
 // Get the info for a PID
-const info = getPIDInfo('0C');
+const info = getPIDInfo("0C");
 console.log(info);
 /**
  * The resulting output will resemble:
@@ -62,7 +64,6 @@ console.log(info);
  *      unit: 'rev/min'
  * }
  */
-
 
 // List all PID IDs
 const allPids = getAllPIDs();
@@ -89,113 +90,114 @@ console.log(allPids);
 
 <!-- do not edit, the table below is auto generated -->
 <!-- insert-table-here -->
-PID | Description | Units
------------- | -------------| --------------
-00 | PIDs supported 00-20 | Bit Encoded
-01 | Monitor status since DTCs cleared | Bit Encoded
-02 | DTC that caused required freeze frame data storage | Bit Encoded
-03 | Fuel system 1 and 2 status | Bit Encoded
-04 | Calculated LOAD Value | %
-05 | Engine Coolant Temperature | Celsius
-06 | Short Term Fuel Trim - Bank 1,3 | %
-07 | Long Term Fuel Trim - Bank 1,3 | %
-08 | Short Term Fuel Trim - Bank 2,4 | %
-09 | Long Term Fuel Trim - Bank 2,4 | %
-0A | Fuel Pressure | kPa
-0B | Intake Manifold Absolute Pressure | kPa
-0C | Engine RPM | rev/min
-0D | Vehicle Speed Sensor | km/h
-0E | Ignition Timing Advance for #1 Cylinder | degrees relative to #1 cylinder
-0F | Intake Air Temperature | Celsius
-10 | Air Flow Rate from Mass Air Flow Sensor | g/s
-11 | Absolute Throttle Position | %
-12 | Commanded Secondary Air Status | Bit Encoded
-13 | Location of Oxygen Sensors | Bit Encoded
-14 | Bank 1 - Sensor 1/Bank 1 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-15 | Bank 1 - Sensor 2/Bank 1 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-16 | Bank 1 - Sensor 3/Bank 2 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-17 | Bank 1 - Sensor 4/Bank 2 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-18 | Bank 2 - Sensor 1/Bank 3 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-19 | Bank 2 - Sensor 2/Bank 3 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-1A | Bank 2 - Sensor 3/Bank 4 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-1B | Bank 2 - Sensor 4/Bank 4 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | V
-1C | OBD requirements to which vehicle is designed | Bit Encoded
-1D | Location of oxygen sensors | Bit Encoded
-1E | Auxiliary Input Status | Bit Encoded
-1F | Time Since Engine Start | seconds
-20 | PIDs supported 21-40 | Bit Encoded
-21 | Distance Travelled While MIL is Activated | km
-22 | Fuel Rail Pressure relative to manifold vacuum | kPa
-23 | Fuel Rail Pressure (diesel) | kPa
-24 | Bank 1 - Sensor 1/Bank 1 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-25 | Bank 1 - Sensor 2/Bank 1 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-26 | Bank 1 - Sensor 3 /Bank 2 - Sensor 1(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-27 | Bank 1 - Sensor 4 /Bank 2 - Sensor 2(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-28 | Bank 2 - Sensor 1 /Bank 3 - Sensor 1(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-29 | Bank 2 - Sensor 2 /Bank 3 - Sensor 2(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-2A | Bank 2 - Sensor 3 /Bank 4 - Sensor 1(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-2B | Bank 2 - Sensor 4 /Bank 4 - Sensor 2(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | (ratio)
-2C | Commanded EGR | %
-2D | EGR Error | %
-2E | Commanded Evaporative Purge | %
-2F | Fuel Level Input | %
-30 | Number of warm-ups since diagnostic trouble codes cleared | 
-31 | Distance since diagnostic trouble codes cleared | km
-32 | Evap System Vapour Pressure | Pa
-33 | Barometric Pressure | kPa
-34 | Bank 1 - Sensor 1/Bank 1 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-35 | Bank 1 - Sensor 2/Bank 1 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-36 | Bank 1 - Sensor 3/Bank 2 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-37 | Bank 1 - Sensor 4/Bank 2 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-38 | Bank 2 - Sensor 1/Bank 3 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-39 | Bank 2 - Sensor 2/Bank 3 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-3A | Bank 2 - Sensor 3/Bank 4 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-3B | Bank 2 - Sensor 4/Bank 4 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | (ratio)
-3C | Catalyst Temperature Bank 1 /  Sensor 1 | Celsius
-3D | Catalyst Temperature Bank 2 /  Sensor 1 | Celsius
-3E | Catalyst Temperature Bank 1 /  Sensor 2 | Celsius
-3F | Catalyst Temperature Bank 2 /  Sensor 2 | Celsius
-40 | PIDs supported 41-60 | Bit Encoded
-41 | Monitor status this driving cycle | Bit Encoded
-42 | Control module voltage | V
-43 | Absolute Load Value | %
-44 | Fuel/air Commanded Equivalence Ratio | (ratio)
-45 | Relative Throttle Position | %
-46 | Ambient air temperature | Celsius
-47 | Absolute Throttle Position B | %
-48 | Absolute Throttle Position C | %
-49 | Accelerator Pedal Position D | %
-4A | Accelerator Pedal Position E | %
-4B | Accelerator Pedal Position F | %
-4C | Commanded Throttle Actuator Control | %
-4D | Time run by the engine while MIL activated | minutes
-4E | Time since diagnostic trouble codes cleared | minutes
-4F | External Test Equipment Configuration #1 | Bit Encoded
-50 | External Test Equipment Configuration #2 | Bit Encoded
-51 | Fuel Type | Bit Encoded
-52 | Ethanol fuel % | %
-53 | Absolute Evap system Vapor Pressure | kPa
-54 | Evap system vapor pressure | Pa
-55 | Short term secondary oxygen sensor trim bank 1 and bank 3 | %
-56 | Long term secondary oxygen sensor trim bank 1 and bank 3 | %
-57 | Short term secondary oxygen sensor trim bank 2 and bank 4 | %
-58 | Long term secondary oxygen sensor trim bank 2 and bank 4 | %
-59 | Fuel rail pressure (absolute) | kPa
-5A | Relative accelerator pedal position | %
-5B | Hybrid battery pack remaining life | %
-5C | Engine oil temperature | °C
-5D | Fuel injection timing | °
-5E | Engine fuel rate | L/h
-5F | Emission requirements to which vehicle is designed | Bit Encoded
-62 | Actual engine - percent torque | %
-67 | Engine coolant temperature | Celsius
-6B | Exhaust gas recirculation temperature | Celsius
-6D | Fuel pressure control system | Celsius
-6E | Injection pressure control system | Celsius
-73 | Exhaust pressure | Celsius
-78 | Exhaust Gas temperature Bank 1 | Celsius
+Index | PID | Description | Name | Units
+------------ |------------ | -------------|-------------| --------------
+1 | 00 | PIDs supported 00-20 | pidsupp0 | Bit Encoded
+2 | 01 | Monitor status since DTCs cleared | dtc_cnt | Bit Encoded
+3 | 02 | DTC that caused required freeze frame data storage | dtcfrzf | Bit Encoded
+4 | 03 | Fuel system 1 and 2 status | fuelsys | Bit Encoded
+5 | 04 | Calculated LOAD Value | load_pct | %
+6 | 05 | Engine Coolant Temperature | temp | Celsius
+7 | 06 | Short Term Fuel Trim - Bank 1,3 | shrtft13 | %
+8 | 07 | Long Term Fuel Trim - Bank 1,3 | longft13 | %
+9 | 08 | Short Term Fuel Trim - Bank 2,4 | shrtft24 | %
+10 | 09 | Long Term Fuel Trim - Bank 2,4 | longft24 | %
+11 | 0A | Fuel Pressure | frp | kPa
+12 | 0B | Intake Manifold Absolute Pressure | map | kPa
+13 | 0C | Engine RPM | rpm | rev/min
+14 | 0D | Vehicle Speed Sensor | vss | km/h
+15 | 0E | Ignition Timing Advance for #1 Cylinder | sparkadv | degrees relative to #1 cylinder
+16 | 0F | Intake Air Temperature | iat | Celsius
+17 | 10 | Air Flow Rate from Mass Air Flow Sensor | maf | g/s
+18 | 11 | Absolute Throttle Position | throttlepos | %
+19 | 12 | Commanded Secondary Air Status | air_stat | Bit Encoded
+20 | 13 | Location of Oxygen Sensors | o2sloc | Bit Encoded
+21 | 14 | Bank 1 - Sensor 1/Bank 1 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s11 | V
+22 | 15 | Bank 1 - Sensor 2/Bank 1 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s12 | V
+23 | 16 | Bank 1 - Sensor 3/Bank 2 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s13 | V
+24 | 17 | Bank 1 - Sensor 4/Bank 2 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s14 | V
+25 | 18 | Bank 2 - Sensor 1/Bank 3 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s21 | V
+26 | 19 | Bank 2 - Sensor 2/Bank 3 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s22 | V
+27 | 1A | Bank 2 - Sensor 3/Bank 4 - Sensor 1 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s23 | V
+28 | 1B | Bank 2 - Sensor 4/Bank 4 - Sensor 2 Oxygen Sensor Output Voltage / Short Term Fuel Trim | o2s24 | V
+29 | 1C | OBD requirements to which vehicle is designed | obdsup | Bit Encoded
+30 | 1D | Location of oxygen sensors | o2sloc2 | Bit Encoded
+31 | 1E | Auxiliary Input Status | pto_stat | Bit Encoded
+32 | 1F | Time Since Engine Start | runtm | seconds
+33 | 20 | PIDs supported 21-40 | piddsupp2 | Bit Encoded
+34 | 21 | Distance Travelled While MIL is Activated | mil_dist | km
+35 | 22 | Fuel Rail Pressure relative to manifold vacuum | frpm | kPa
+36 | 23 | Fuel Rail Pressure (diesel) | frpd | kPa
+37 | 24 | Bank 1 - Sensor 1/Bank 1 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda11 | (ratio)
+38 | 25 | Bank 1 - Sensor 2/Bank 1 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda12 | (ratio)
+39 | 26 | Bank 1 - Sensor 3 /Bank 2 - Sensor 1(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda13 | (ratio)
+40 | 27 | Bank 1 - Sensor 4 /Bank 2 - Sensor 2(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda14 | (ratio)
+41 | 28 | Bank 2 - Sensor 1 /Bank 3 - Sensor 1(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda21 | (ratio)
+42 | 29 | Bank 2 - Sensor 2 /Bank 3 - Sensor 2(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda22 | (ratio)
+43 | 2A | Bank 2 - Sensor 3 /Bank 4 - Sensor 1(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda23 | (ratio)
+44 | 2B | Bank 2 - Sensor 4 /Bank 4 - Sensor 2(wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Voltage | lambda24 | (ratio)
+45 | 2C | Commanded EGR | egr_pct | %
+46 | 2D | EGR Error | egr_err | %
+47 | 2E | Commanded Evaporative Purge | evap_pct | %
+48 | 2F | Fuel Level Input | fli | %
+49 | 30 | Number of warm-ups since diagnostic trouble codes cleared | warm_ups | 
+50 | 31 | Distance since diagnostic trouble codes cleared | clr_dist | km
+51 | 32 | Evap System Vapour Pressure | evap_vp | Pa
+52 | 33 | Barometric Pressure | baro | kPa
+53 | 34 | Bank 1 - Sensor 1/Bank 1 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac11 | (ratio)
+54 | 35 | Bank 1 - Sensor 2/Bank 1 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac12 | (ratio)
+55 | 36 | Bank 1 - Sensor 3/Bank 2 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac13 | (ratio)
+56 | 37 | Bank 1 - Sensor 4/Bank 2 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac14 | (ratio)
+57 | 38 | Bank 2 - Sensor 1/Bank 3 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac21 | (ratio)
+58 | 39 | Bank 2 - Sensor 2/Bank 3 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac22 | (ratio)
+59 | 3A | Bank 2 - Sensor 3/Bank 4 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac23 | (ratio)
+60 | 3B | Bank 2 - Sensor 4/Bank 4 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current | lambdac24 | (ratio)
+61 | 3C | Catalyst Temperature Bank 1 /  Sensor 1 | catemp11 | Celsius
+62 | 3D | Catalyst Temperature Bank 2 /  Sensor 1 | catemp21 | Celsius
+63 | 3E | Catalyst Temperature Bank 1 /  Sensor 2 | catemp12 | Celsius
+64 | 3F | Catalyst Temperature Bank 2 /  Sensor 2 | catemp22 | Celsius
+65 | 40 | PIDs supported 41-60 | piddsupp4 | Bit Encoded
+66 | 41 | Monitor status this driving cycle | monitorstat | Bit Encoded
+67 | 42 | Control module voltage | vpwr | V
+68 | 43 | Absolute Load Value | load_abs | %
+69 | 44 | Fuel/air Commanded Equivalence Ratio | lambda | (ratio)
+70 | 45 | Relative Throttle Position | tp_r | %
+71 | 46 | Ambient air temperature | aat | Celsius
+72 | 47 | Absolute Throttle Position B | tp_b | %
+73 | 48 | Absolute Throttle Position C | tp_c | %
+74 | 49 | Accelerator Pedal Position D | app_d | %
+75 | 4A | Accelerator Pedal Position E | app_e | %
+76 | 4B | Accelerator Pedal Position F | app_f | %
+77 | 4C | Commanded Throttle Actuator Control | tac_pct | %
+78 | 4D | Time run by the engine while MIL activated | mil_time | minutes
+79 | 4E | Time since diagnostic trouble codes cleared | clr_time | minutes
+80 | 4F | External Test Equipment Configuration #1 | exttest1 | Bit Encoded
+81 | 50 | External Test Equipment Configuration #2 | exttest2 | Bit Encoded
+82 | 51 | Fuel Type | fuel_type | Bit Encoded
+83 | 52 | Ethanol fuel % | alch_pct | %
+84 | 53 | Absolute Evap system Vapor Pressure | abs_vp | kPa
+85 | 54 | Evap system vapor pressure | system_vp | Pa
+86 | 55 | Short term secondary oxygen sensor trim bank 1 and bank 3 | s02b13 | %
+87 | 56 | Long term secondary oxygen sensor trim bank 1 and bank 3 | l02b13 | %
+88 | 57 | Short term secondary oxygen sensor trim bank 2 and bank 4 | s02b24 | %
+89 | 58 | Long term secondary oxygen sensor trim bank 2 and bank 4 | l02b24 | %
+90 | 59 | Fuel rail pressure (absolute) | frp_abs | kPa
+91 | 5A | Relative accelerator pedal position | pedalpos | %
+92 | 5B | Hybrid battery pack remaining life | hybridlife | %
+93 | 5C | Engine oil temperature | engineoilt | °C
+94 | 5D | Fuel injection timing | finjtiming | °
+95 | 5E | Engine fuel rate | enginefrate | L/h
+96 | 5F | Emission requirements to which vehicle is designed | emmissionreq | Bit Encoded
+97 | 62 | Actual engine - percent torque | aet | %
+98 | 67 | Engine coolant temperature | ect | Celsius
+99 | 6B | Exhaust gas recirculation temperature | egrt | Celsius
+100 | 6D | Fuel pressure control system | fpc | Celsius
+101 | 6E | Injection pressure control system | ipct | Celsius
+102 | 73 | Exhaust pressure | ep | Celsius
+103 | 78 | Exhaust Gas temperature Bank 1 | egt | Celsius
 
 <!-- end-table-here -->
 
 ## LICENSE
+
 This module is available under a [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html), see also the [LICENSE file](https://raw.github.com/nishkalkashyap/obd-utils/master/LICENSE) for details.
