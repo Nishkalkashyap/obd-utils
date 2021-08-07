@@ -17,7 +17,9 @@ export enum Modes {
   '09' = '09',
 }
 
-export interface IObdResponse
+export interface IParsedOBDResponse
   extends Partial<Pick<IObdPID, 'mode' | 'pid' | 'name' | 'unit'>> {
   value?: string;
 }
+
+export type IObdPIDDescriptor = Omit<IObdPID, 'convertToUseful'>;

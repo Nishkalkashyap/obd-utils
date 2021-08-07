@@ -1,9 +1,9 @@
 import responsePIDS from './obdInfo';
 import PIDS from './obdInfo';
-import {IObdPID, IObdResponse, Modes} from './obdTypes';
+import { IObdPIDDescriptor, IParsedOBDResponse, Modes} from './obdTypes';
 
-export function parseOBDCommand(hexString: string) {
-  var reply: IObdResponse = {},
+export function parseOBDCommand(hexString: string): IParsedOBDResponse {
+  var reply: IParsedOBDResponse = {},
     byteNumber,
     valueArray; //New object
 
@@ -98,11 +98,12 @@ export function parseOBDCommand(hexString: string) {
   return reply;
 }
 
-export function getPIDInfo(pid: string): Omit<IObdPID, 'convertToUseful'> | null{
+
+export function getPIDInfo(pid: string): IObdPIDDescriptor | null{
   const responsePid = responsePIDS.find((item)=>item.pid === pid);
   return responsePid || null;
 }
 
-export function getAllPIDs(): IObdPID[]{
+export function getAllPIDs(): IObdPIDDescriptor[]{
   return responsePIDS;
 }
