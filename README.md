@@ -58,3 +58,9 @@ console.log(allPids);
  * ]
  */
 ```
+
+## List of OBD2 PIDs
+
+<!-- do not edit, the table below is auto generated -->
+<!-- insert-table-here -->
+<!-- end-table-here -->
