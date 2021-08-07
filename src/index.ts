@@ -2,7 +2,8 @@ import responsePIDS from './obdInfo';
 import PIDS from './obdInfo';
 import { IObdPIDDescriptor, IParsedOBDResponse, Modes} from './obdTypes';
 
-export function parseOBDCommand(hexString: string): IParsedOBDResponse {
+
+export function parseOBDResponse(hexString: string): IParsedOBDResponse {
   var reply: IParsedOBDResponse = {},
     byteNumber,
     valueArray; //New object
