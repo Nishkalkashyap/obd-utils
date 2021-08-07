@@ -1,9 +1,9 @@
 import {getAllPIDs} from '../src/index';
 import * as fs from 'fs';
 
-let readme = 'Index | PID | Description | Name | Units\n------------ |------------ | -------------|-------------| --------------\n';
-getAllPIDs().forEach(({pid,description, unit, name}, index)=>{
-    readme = readme.concat(`${index + 1} | ${pid} | ${description} | ${name} | ${unit}\n`);
+let readme = 'Index | PID | Description | Units\n------------ |------------ | -------------| --------------\n';
+getAllPIDs().forEach(({pid,description, unit}, index)=>{
+    readme = readme.concat(`${index + 1} | ${pid} | ${description} | ${unit}\n`);
 });
 
 const startIdentifier = '<!-- insert-table-here -->';
