@@ -297,7 +297,7 @@ function convertVIN(byte: string) {
   return vin;
 }
 
-export const PIDS = {
+const PIDS = {
   ENGINE_COOLANT_TEMPERATURE_SENSOR: '05',
   FUEL_PRESSURE_SENSOR: '0A',
   INTAKE_MANIFOLD_ABSOLUTE_PRESSURE_SENSOR: '0B',
