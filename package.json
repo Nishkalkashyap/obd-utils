@@ -1,6 +1,6 @@
 {
   "name": "obd-utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Provides utilities for OBD2",
   "author": "Nishkal <hello@nishkal.in>",
   "repository": "https://github.com/Nishkalkashyap/obd-utils",
@@ -24,8 +24,8 @@
     "build-cjs": "tsc --module commonjs --outDir lib/cjs",
     "build-es6": "tsc --module ES6 --outDir lib/es6",
     "build-all": "npm run build-umd && npm run build-cjs && npm run build-es6",
-    "update-readme": "",
-    "prepublishOnly": "npm run build-all && npm run build-cli"
+    "update-readme": "npx ts-node ./scripts/generate-pid-readme.ts",
+    "prepublishOnly": "npm run update-readme && npm run build-all && npm run build-cli"
   },
   "bin": "./bin/scripts/cli.js",
   "license": "Apache-2.0",
