@@ -2,12 +2,38 @@
 
 The aim of this library is to provide utility methods to make it easier to work with the OBD-II protocol.
 
+## CLI Usage:
+```bash
+# e.g. parse an OBD response
+$ npx obd-utils parse "41 05 3C"
+{
+    "mode": "41",
+    "pid": "05",
+    "name": "temp",
+    "unit": "Celsius",
+    "value": 20
+}
+
+# e.g. get info for PID "05", i.e. engine temperature sensor
+$ npx obd-utils info 05
+{
+    "mode": "01",
+    "pid": "05",
+    "bytes": 1,
+    "name": "temp",
+    "description": "Engine Coolant Temperature",
+    "min": -40,
+    "max": 215,
+    "unit": "Celsius"
+}
+```
+
 ## Programmatic Usage:
 ```ts
 import { parseOBDResponse, getPIDInfo } from 'obd-utils';
 
 // Parse an OBD response
-const parsedCommand = parseOBDResponse('41 05 3C \r');
+const parsedCommand = parseOBDResponse('41 05 3C');
 console.log(parsedCommand);
 /**
  * The resulting output will resemble:
