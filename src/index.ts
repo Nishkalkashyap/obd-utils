@@ -102,3 +102,7 @@ export function getPIDInfo(pid: string): Omit<IObdPID, 'convertToUseful'> | null
   const responsePid = responsePIDS.find((item)=>item.pid === pid);
   return responsePid || null;
 }
+
+export function getAllPIDs(): IObdPID[]{
+  return responsePIDS;
+}
