@@ -170,3 +170,6 @@ PID | Description | Units
 78 | Exhaust Gas temperature Bank 1 | Celsius
 
 <!-- end-table-here -->
+
+## LICENSE
+This module is available under a [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html), see also the [LICENSE file](https://raw.github.com/nishkalkashyap/obd-utils/master/LICENSE) for details.

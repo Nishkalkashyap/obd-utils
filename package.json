@@ -2,18 +2,32 @@
   "name": "obd-utils",
   "version": "0.0.1",
   "description": "Provides utilities for OBD2",
+  "author": "Nishkal <hello@nishkal.in>",
+  "repository": "https://github.com/Nishkalkashyap/obd-utils",
+  "homepage": "https://github.com/Nishkalkashyap/obd-utils",
+  "bugs": {
+    "url": "https://github.com/Nishkalkashyap/obd-utils/issues"
+  },
   "main": "./lib/umd/index.js",
+  "keywords": [
+    "OBD",
+    "OBD2",
+    "obd-utils",
+    "obd-parser",
+    "elm327",
+    "elm"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-cli": "tsc --project ./tsconfig.scripts.json --module commonjs --outDir bin",
     "build-umd": "tsc --module umd --outDir lib/umd",
     "build-cjs": "tsc --module commonjs --outDir lib/cjs",
     "build-es6": "tsc --module ES6 --outDir lib/es6",
-    "build-all": "npm run build-umd && npm run build-cjs && npm run build-es6"
+    "build-all": "npm run build-umd && npm run build-cjs && npm run build-es6",
+    "prepublishOnly": "npm run build-all && npm run build-cli"
   },
   "bin": "./bin/scripts/cli.js",
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^16.4.13",
     "ts-node": "^10.1.0",
@@ -21,5 +35,6 @@
   },
   "dependencies": {
     "commander": "^8.1.0"
-  }
+  },
+  "types": "./lib/umd/index.d.ts"
 }
