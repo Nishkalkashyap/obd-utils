@@ -1,5 +1,6 @@
+import responsePIDS from './obdInfo';
 import PIDS from './obdInfo';
-import {IObdResponse, Modes} from './obdTypes';
+import {IObdPID, IObdResponse, Modes} from './obdTypes';
 
 export function parseOBDCommand(hexString: string) {
   var reply: IObdResponse = {},
@@ -95,4 +96,9 @@ export function parseOBDCommand(hexString: string) {
     }
   }
   return reply;
+}
+
+export function getPIDInfo(pid: string): Omit<IObdPID, 'convertToUseful'> | null{
+  const responsePid = responsePIDS.find((item)=>item.pid === pid);
+  return responsePid || null;
 }
