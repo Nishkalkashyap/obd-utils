@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 
-import {IObdPID, Modes} from './obdTypes';
+import {IObdPID, Modes,FuelType} from './obdTypes';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 function checkHex(n: string) {
@@ -79,36 +79,9 @@ function convertCommandedDiesel(byte:string):number{
 function convertTransmissionActualGear(byteA:string,byteB:string):number{
   return (256*parseInt(byteA,16)+parseInt(byteB,16))/1000
 }
-enum FuelType{
-  NOTAVAILABLE= 'Not Available',
-  GASOLINE = 'Gasoline',
-  METHANOL = 'Methanol',
-  ETHANOL = 'Ethanol',
-  DIESEL= 'Diesel',
-  LPG= 'Lpg',
-  CNG= 'Cng',
-  PROPANE= 'Propane',
-  ELECTRIC= 'Electric',
-  BIFUELGASOLINE= 'Bifuel running Gasoline',
-  BIFUELMETHANOL ='Bifuel running Methanol',
-  BIFUELETHANOL= 'Bifuel running Ethanol',
-  BIFUELLPG= 'Bifuel running Lpg',
-  BIFUELCNG= 'Bifuel running Cng',
-  BIFUELPROPANE= 'Bifuel running Propane',
-  BIFUELELECTRICITY='Bifuel running Electricity',
-  BIFUELCOMBUSTIONENGINE= 'Bifuel running electric and combustion engine',
-  HYBRIDGASOLINE= 'Hybrid Gasoline',
-  HYBRIDETHANOL='Hybrid Ethanol',
-  HYBRIDDIESEL='Hybrid Diesel',
-  HYBRIDELECTRIC='Hybrid Electric',
-  HYBRIDCOMBUSTIONENGINE='Hybrid running electric and combustion engine',
-  HYBRIDREGENERATIVE='Hybrid regenerative',
-  BIFUELDIESEL='Bifuel running diesel',
-}
-
 function fuelTypeDecoder(byte:string):string{
-  var a=parseInt(byte,16);
-  switch(a){
+  var fuelInt=parseInt(byte,16);
+  switch(fuelInt){
       case 0:
           return FuelType.NOTAVAILABLE;
       case 1:
