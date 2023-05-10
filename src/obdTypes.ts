@@ -7,7 +7,7 @@ export interface IObdPID {
   min: number;
   max: number;
   unit: string;
-  convertToUseful?: Function;
+  convertToUseful?: (...bytes: any) => string|number;
 }
 export enum FuelType{
   NOTAVAILABLE= 'Not Available',
@@ -44,7 +44,7 @@ export enum Modes {
 
 export interface IParsedOBDResponse
   extends Partial<Pick<IObdPID, 'mode' | 'pid' | 'name' | 'unit'>> {
-  value?: string;
+  value?: string|number;
 }
 
 export type IObdPIDDescriptor = Omit<IObdPID, 'convertToUseful'>;

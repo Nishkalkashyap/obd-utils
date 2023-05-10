@@ -1,12 +1,11 @@
 import responsePIDS from './obdInfo';
-import PIDS from './obdInfo';
-import { IObdPIDDescriptor, IParsedOBDResponse, Modes} from './obdTypes';
+import { IObdPID, IObdPIDDescriptor, IParsedOBDResponse, Modes} from './obdTypes';
 
 
 export function parseOBDResponse(hexString: string): IParsedOBDResponse {
-  var reply: IParsedOBDResponse = {},
-    byteNumber,
-    valueArray; //New object
+  const reply: IParsedOBDResponse = {};
+  let byteNumber = 0;
+  let valueArray: any[] = []; //New object
 
   if (
     hexString === 'NO DATA' ||
@@ -23,23 +22,23 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
   hexString = hexString.replace(/ /g, ''); //Whitespace trimming //Probably not needed anymore?
   valueArray = [];
 
-  for (byteNumber = 0; byteNumber < hexString.length; byteNumber += 2) {
-    valueArray.push(hexString.substr(byteNumber, 2));
+  for (byteNumber; byteNumber < hexString.length; byteNumber += 2) {
+    valueArray.push(hexString.substring(byteNumber, 2));
   }
 
   if (valueArray[0] === '41') {
     reply.mode = valueArray[0] as Modes;
     reply.pid = valueArray[1];
-    for (var i = 0; i < PIDS.length; i++) {
-      if (PIDS[i].pid === reply.pid) {
-        var numberOfBytes = PIDS[i].bytes;
+    responsePIDS.forEach((pid: IObdPID) => {
+      if (pid.pid === reply.pid) {
+        const numberOfBytes = pid.bytes;
 
-        reply.name = PIDS[i].name;
-        reply.unit = PIDS[i].unit;
+        reply.name = pid.name;
+        reply.unit = pid.unit;
 
-        const convertToUseful = PIDS[i].convertToUseful;
+        const convertToUseful = pid.convertToUseful;
         if (!convertToUseful) {
-          break;
+          return;
         }
 
         switch (numberOfBytes) {
@@ -70,20 +69,19 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
             );
             break;
         }
-        break; //Value is converted, break out the for loop.
       }
-    }
+    })
   } else if (valueArray[0] === '43') {
     reply.mode = valueArray[0] as Modes;
-    for (var i = 0; i < PIDS.length; i++) {
-      if (PIDS[i].mode === '03') {
-        const convertToUseful = PIDS[i].convertToUseful;
+    responsePIDS.forEach((pid: IObdPID) => {
+      if (pid.mode === '03') {
+        const convertToUseful = pid.convertToUseful;
         if (!convertToUseful) {
-          break;
+          return;
         }
 
-        reply.name = PIDS[i].name;
-        reply.unit = PIDS[i].unit;
+        reply.name = pid.name;
+        reply.unit = pid.unit;
 
         reply.value = convertToUseful(
           valueArray[1],
@@ -94,7 +92,7 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
           valueArray[6],
         );
       }
-    }
+    })
   }
   return reply;
 }

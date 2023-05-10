@@ -8,7 +8,6 @@ function checkHex(n: string) {
 }
 function Hex2Bin(n: string) {
   if (!checkHex(n)) {
-    // return 0; // changed
     return '';
   }
   return zeroFill(parseInt(n, 16).toString(2), 4);
@@ -31,11 +30,11 @@ function convertPIDSupported(
   byteC: string,
   byteD: string,
 ) {
-  var hexstring = byteA + byteB + byteC + byteD;
-  var pidHex = hexstring.split('');
-  var pidStatus: boolean[] = [];
+  const hexstring = byteA + byteB + byteC + byteD;
+  const pidHex = hexstring.split('');
+  const pidStatus: boolean[] = [];
   pidHex.forEach(function (hex) {
-    var hexPerm = Hex2Bin(hex).split('');
+    const hexPerm = Hex2Bin(hex).split('');
     hexPerm.forEach(function (perm: string) {
       pidStatus.push(perm === '1' ? true : false);
     });
@@ -43,7 +42,7 @@ function convertPIDSupported(
   return pidStatus;
 }
 function convertFuelSystem(byteA: string, byteB: string) {
-  var reply: any = {};
+  const reply: any = {};
   reply.system1 = bitDecoder(byteA);
   if (byteB) {
     reply.system2 = bitDecoder(byteB);
@@ -57,15 +56,15 @@ function convertDTCCheck(
   byteD: string,
 ) {
   //ByteB, ByteC and ByteD are not read. These bytes are for testing purposes, which is not supported in this module.
-  var byteValue, mil, numberOfDTCs, reply: any;
-  byteValue = parseInt(byteA, 16);
+  const byteValue: number = parseInt(byteA, 16);
+  const numberOfDTCs: number = byteValue % 128;
+  const reply: any = {};
+  let mil: number;
   if (byteValue >> 7 === 1) {
     mil = 1;
   } else {
     mil = 0;
   }
-  numberOfDTCs = byteValue % 128;
-  reply = {};
   reply.numberOfErrors = numberOfDTCs;
   reply.mil = mil;
   return reply;
@@ -80,7 +79,7 @@ function convertTransmissionActualGear(byteA:string,byteB:string):number{
   return (256*parseInt(byteA,16)+parseInt(byteB,16))/1000
 }
 function fuelTypeDecoder(byte:string):string{
-  var fuelInt=parseInt(byte,16);
+  const fuelInt=parseInt(byte,16);
   switch(fuelInt){
       case 0:
           return FuelType.NOTAVAILABLE;
@@ -159,11 +158,11 @@ function convertDTCRequest(
   byteE: string,
   byteF: string,
 ) {
-  var reply: any = {};
+  const reply: any = {};
   reply.errors = [];
 
-  var decodeDTCCode = function (byte1: string, byte2: string) {
-    var codeString = '',
+  const decodeDTCCode = function (byte1: string, byte2: string) {
+    let codeString = '',
       firstChar = '';
 
     //If 00 00 --> No code.
@@ -171,8 +170,8 @@ function convertDTCRequest(
       return '-';
     }
 
-    var firstByte = parseInt(byte1, 16);
-    var firstCharBytes = firstByte >> 6;
+    const firstByte = parseInt(byte1, 16);
+    const firstCharBytes = firstByte >> 6;
     switch (firstCharBytes) {
       case 0:
         firstChar = 'P';
@@ -190,8 +189,8 @@ function convertDTCRequest(
         console.log('Error with DTC');
         break;
     }
-    var secondChar = (firstByte >> 4) % 4;
-    var thirdChar = firstByte % 16;
+    const secondChar = (firstByte >> 4) % 4;
+    const thirdChar = firstByte % 16;
     codeString = firstChar + secondChar + thirdChar + byte2;
     return codeString;
   };
@@ -249,7 +248,7 @@ function convertLambda(
   byteC: string,
   byteD: string,
 ) {
-  var reply: any = {};
+  const reply: any = {};
   reply.ratio = ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 2) / 65535;
   reply.voltage =
     ((parseInt(byteC, 16) * 256 + parseInt(byteD, 16)) * 8) / 65535;
@@ -270,7 +269,7 @@ function convertLambda2(
   byteC: string,
   byteD: string,
 ) {
-  var reply: any = {};
+  const reply: any = {};
   reply.ratio = (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 32768;
   reply.voltage = (parseInt(byteC, 16) * 256 + parseInt(byteD, 16)) / 256 - 128;
   return reply;
@@ -299,7 +298,7 @@ function convertExternalTestEquipment(
   byteC: string,
   byteD: string,
 ) {
-  var reply: any = {};
+  const reply: any = {};
   reply.te1 = bitDecoder(byteA);
   reply.te2 = bitDecoder(byteB);
   reply.te3 = bitDecoder(byteC);
@@ -312,7 +311,7 @@ function convertExternalTestEquipment2(
   byteC: string,
   byteD: string,
 ) {
-  var reply: any = {};
+  const reply: any = {};
   reply.te1 = bitDecoder(byteA) * 10;
   reply.te2 = bitDecoder(byteB);
   reply.te3 = bitDecoder(byteC);
@@ -326,7 +325,7 @@ function convertSystemVaporPressure(byteA: string, byteB: string) {
   return parseInt(byteA, 16) * 256 + parseInt(byteB, 16) - 32767;
 }
 function convertShortOxygenSensorOutput(byteA: string, byteB: string) {
-  var reply: any = {};
+  const reply: any = {};
   reply.bank1 = ((parseInt(byteA, 16) - 128) * 100) / 128;
   reply.bank2 = ((parseInt(byteB, 16) - 128) * 100) / 128;
   return reply;
@@ -357,25 +356,13 @@ function notSupported() {
 function convertVIN_count(byte: string) {
   return byte;
 }
-// changed
-// function convertVIN(byte) {
-//     byte = byte.split("");
-//     var tmp=[], vin="";
-//     for(var i in byte){
-//         tmp[i] = parseInt(byte[i]);
-//         tmp[i] = parseInt(tmp[i], 16);
-//         vin += String.fromCharCode(tmp[i]);
-//     }
-//     return vin;
-// }
 function convertVIN(byte: string) {
   const byteArray = byte.split('');
-  var tmp: number[] = [],
-    vin = '';
-  for (var i in byteArray) {
-    tmp[i] = parseInt(byteArray[i]);
-    tmp[i] = parseInt(tmp[i].toString(), 16);
-    vin += String.fromCharCode(tmp[i]);
+  let vin = '';
+  for (const i in byteArray) {
+    let tmp = parseInt(byteArray[i]);
+    tmp = parseInt(tmp.toString(), 16);
+    vin += String.fromCharCode(tmp);
   }
   return vin;
 }
@@ -393,13 +380,12 @@ const PIDS = {
   ENGINE_RUNTIME: '1F',
 };
 
-var responsePIDS: IObdPID[];
-var modeRealTime: Modes = Modes['01'];
-var modeRequestDTC: Modes = Modes['03'];
-var modeClearDTC: Modes = Modes['04'];
-var modeVin: Modes = Modes['09'];
+const modeRealTime: Modes = Modes['01'];
+const modeRequestDTC: Modes = Modes['03'];
+const modeClearDTC: Modes = Modes['04'];
+const modeVin: Modes = Modes['09'];
 
-responsePIDS = [
+const responsePIDS: IObdPID[] = [
   //Realtime data
   {
     mode: modeRealTime,
@@ -1728,6 +1714,4 @@ responsePIDS = [
   //     convertToUseful: convertVIN,
   //   },
 ];
-
-// var exports = (module.exports = responsePIDS);
 export default responsePIDS;

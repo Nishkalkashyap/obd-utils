@@ -1,21 +1,22 @@
 #! /usr/bin/env node
 "use strict";
+//@ig
 Object.defineProperty(exports, "__esModule", { value: true });
-var commander_1 = require("commander");
-var index_1 = require("../src/index");
-var program = new commander_1.Command();
+import { Command } from "commander";
+import { getPIDInfo, parseOBDResponse } from "../src/index";
+const program = new Command();
 program
     .command('info <pid>')
     .description('Get info for a PID')
     .action(function (pid) {
-    var info = index_1.getPIDInfo(pid);
+    var info = getPIDInfo(pid);
     console.log(JSON.stringify(info, null, 4));
 });
 program
     .command('parse <hexString>')
     .description('Parse an OBD response')
     .action(function (hexString) {
-    var parsedResponse = index_1.parseOBDResponse(hexString);
+    var parsedResponse = parseOBDResponse(hexString);
     console.log(JSON.stringify(parsedResponse, null, 4));
 });
 program.parse(process.argv);
