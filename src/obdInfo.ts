@@ -13,6 +13,8 @@ function Hex2Bin(n: string) {
   }
   return zeroFill(parseInt(n, 16).toString(2), 4);
 }
+
+
 function zeroFill(number: string, width: number) {
   width -= number.toString().length;
   if (width > 0) {
@@ -68,85 +70,112 @@ function convertDTCCheck(
   reply.mil = mil;
   return reply;
 }
-function hexDecoder(byte){
+function hexDecoder(byte:string):number{
   return parseInt(byte,16);
 }
-function convertCommandedDiesel(byte){
+function convertCommandedDiesel(byte:string):number{
   return parseInt(byte,16)/2
 }
-function convertTransmissionActualGear(byteA,byteB){
+function convertTransmissionActualGear(byteA:string,byteB:string):number{
   return (256*parseInt(byteA,16)+parseInt(byteB,16))/1000
 }
-function fuelTypeDecoder(byte){
+enum FuelType{
+  NOTAVAILABLE= 'Not Available',
+  GASOLINE = 'Gasoline',
+  METHANOL = 'Methanol',
+  ETHANOL = 'Ethanol',
+  DIESEL= 'Diesel',
+  LPG= 'Lpg',
+  CNG= 'Cng',
+  PROPANE= 'Propane',
+  ELECTRIC= 'Electric',
+  BIFUELGASOLINE= 'Bifuel running Gasoline',
+  BIFUELMETHANOL ='Bifuel running Methanol',
+  BIFUELETHANOL= 'Bifuel running Ethanol',
+  BIFUELLPG= 'Bifuel running Lpg',
+  BIFUELCNG= 'Bifuel running Cng',
+  BIFUELPROPANE= 'Bifuel running Propane',
+  BIFUELELECTRICITY='Bifuel running Electricity',
+  BIFUELCOMBUSTIONENGINE= 'Bifuel running electric and combustion engine',
+  HYBRIDGASOLINE= 'Hybrid Gasoline',
+  HYBRIDETHANOL='Hybrid Ethanol',
+  HYBRIDDIESEL='Hybrid Diesel',
+  HYBRIDELECTRIC='Hybrid Electric',
+  HYBRIDCOMBUSTIONENGINE='Hybrid running electric and combustion engine',
+  HYBRIDREGENERATIVE='Hybrid regenerative',
+  BIFUELDIESEL='Bifuel running diesel',
+}
+
+function fuelTypeDecoder(byte:string):string{
   var a=parseInt(byte,16);
   switch(a){
       case 0:
-          return 'not available';
+          return FuelType.NOTAVAILABLE;
       case 1:
-          return 'Gasoline';
+          return FuelType.GASOLINE;
       case 2:    
-          return 'Methanol' ;       
+          return FuelType.METHANOL ;       
       case 3:
-          return 'Ethanol';
+          return FuelType.ETHANOL;
       case 4:
-          return 'Diesel';
+          return FuelType.DIESEL;
       case 5:
-          return 'LPG';
+          return FuelType.LPG;
       case 6:
-          return 'CNG';
+          return FuelType.CNG;
       case 7:
-          return 'Propane';
+          return FuelType.PROPANE;
       case 8:
-          return 'Electric';
+          return FuelType.ELECTRIC;
       case 9:
-          return 'Bifuel running Gasoline';
+          return FuelType.BIFUELGASOLINE;
       case 10:
-          return 'Bifuel running Methanol';
+          return FuelType.BIFUELMETHANOL;
       case 11:
-          return 'Bifuel running Ethanol';
+          return FuelType.BIFUELETHANOL;
       case 12:
-          return 'Bifuel running LPG';
+          return FuelType.BIFUELLPG;
       case 13:
-          return 'Bifuel running CNG';
+          return FuelType.BIFUELCNG;
       case 14:
-          return 'Bifuel running Propane';
+          return FuelType.BIFUELPROPANE;
       case 15:
-          return 'Bifuel running Electricity';
+          return FuelType.BIFUELELECTRICITY;
       case 16:
-          return 'Bifuel running electric and combustion engine';
+          return FuelType.BIFUELCOMBUSTIONENGINE;
       case 17:
-          return 'Hybrid Gasolin';
+          return FuelType.HYBRIDGASOLINE;
       case 18:
-          return 'Hybrid Ethanol';
+          return FuelType.HYBRIDETHANOL;
       case 19:
-          return 'Hybrid Diesel';
+          return FuelType.HYBRIDDIESEL;
       case 20:
-          return 'Hybrid Electric';
+          return FuelType.HYBRIDELECTRIC;
       case 21:
-          return 'Hybrid running electric and combustion engine';
+          return FuelType.HYBRIDCOMBUSTIONENGINE;
       case 22:
-          return 'Hybrid regenerative';
+          return FuelType.HYBRIDREGENERATIVE;
       case 23:
-          return 'Bifuel running Diesel';
+          return FuelType.BIFUELDIESEL;
       default:
           return 'null';
   }
 
 }
-function convertEngineReferenceTorque (byteA,byteB) {
+function convertEngineReferenceTorque (byteA:string,byteB:string):number {
   return 256*parseInt(byteA,16)+parseInt(byteB,16);
 }
-function convertDieselFilter(byteA,byteB){
+function convertDieselFilter(byteA:string,byteB:string):number{
   return ((256*parseInt(byteA,16)+parseInt(byteB,16))/10)-40;
 }
-function convertMassAirFlow(byteA,byteB){
+function convertMassAirFlow(byteA:string,byteB:string):number{
   return (256*parseInt(byteA,16)+parseInt(byteB,16))/32;
 }
-function convertEngineCoolant(byte){
+function convertEngineCoolant(byte:string):number{
   return parseInt(byte,16)-40;
 
 }
-function convertOdometer(byteA,byteB,byteC,byteD){
+function convertOdometer(byteA:string,byteB:string,byteC:string,byteD:string):number{
   return (parseInt(byteA,16)*Math.pow(2,24)+parseInt(byteB,16)*Math.pow(2,16)+parseInt(byteC,16)*Math.pow(2,8)+parseInt(byteD,16))/10;
 }
 function convertDTCRequest(
