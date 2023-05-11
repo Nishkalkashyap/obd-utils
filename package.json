@@ -3,10 +3,13 @@
   "version": "0.0.2",
   "description": "Provides utilities for OBD2",
   "author": "MinervaS <tech@minervas.it>",
-  "repository": "https://github.com/MinervaScompany/obd-utils",
+  "repository": "https://github.com/MinervaScompany/obd-utils.git",
   "homepage": "https://github.com/MinervaScompany/obd-utils",
   "bugs": {
     "url": "https://github.com/Nishkalkashyap/obd-utils/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "main": "./lib/umd/index.js",
   "keywords": [
