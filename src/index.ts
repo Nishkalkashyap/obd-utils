@@ -23,7 +23,7 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
   valueArray = [];
 
   for (byteNumber; byteNumber < hexString.length; byteNumber += 2) {
-    valueArray.push(hexString.substring(byteNumber, 2));
+    valueArray.push(hexString.substring(byteNumber, byteNumber + 2));
   }
 
   if (valueArray[0] === '41') {
