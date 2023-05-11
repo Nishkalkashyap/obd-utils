@@ -2,9 +2,9 @@
   "name": "obd-utils",
   "version": "0.2.1",
   "description": "Provides utilities for OBD2",
-  "author": "Nishkal <hello@nishkal.in>",
-  "repository": "https://github.com/Nishkalkashyap/obd-utils",
-  "homepage": "https://github.com/Nishkalkashyap/obd-utils",
+  "author": "MinervaS <tech@minervas.it>",
+  "repository": "https://github.com/MinervaScompany/obd-utils",
+  "homepage": "https://github.com/MinervaScompany/obd-utils",
   "bugs": {
     "url": "https://github.com/Nishkalkashyap/obd-utils/issues"
   },
