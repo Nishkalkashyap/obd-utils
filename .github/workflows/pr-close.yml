@@ -39,6 +39,7 @@ jobs:
         run: npm pkg get version
 
   publish:
+    needs: update
     name: 'Publish'
     runs-on: ubuntu-latest
     steps:
