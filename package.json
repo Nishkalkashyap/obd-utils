@@ -1,6 +1,6 @@
 {
   "name": "minervasobd-utils",
-  "version": "0.0.4",
+  "version": "0.0.3",
   "description": "Provides utilities for OBD2",
   "author": "MinervaS <tech@minervas.it>",
   "repository": "https://github.com/MinervaScompany/obd-utils.git",
