@@ -14,7 +14,6 @@ function Hex2Bin(n: string) {
   return zeroFill(parseInt(n, 16).toString(2), 4);
 }
 
-
 function zeroFill(number: string, width: number) {
   width -= number.toString().length;
   if (width > 0) {
@@ -32,7 +31,7 @@ function convertPIDSupported(
   byteA: string,
   byteB: string,
   byteC: string,
-  byteD: string,
+  byteD: string
 ) {
   const hexstring = byteA + byteB + byteC + byteD;
   const pidHex = hexstring.split('');
@@ -61,7 +60,7 @@ function convertDTCCheck(
   byteA: string,
   byteB: string,
   byteC: string,
-  byteD: string,
+  byteD: string
 ) {
   //ByteB, ByteC and ByteD are not read. These bytes are for testing purposes, which is not supported in this module.
   const byteValue: number = parseInt(byteA, 16);
@@ -83,11 +82,11 @@ function hexDecoder(byte: string): number {
 }
 
 function convertCommandedDiesel(byte: string): number {
-  return parseInt(byte, 16) / 2
+  return parseInt(byte, 16) / 2;
 }
 
 function convertTransmissionActualGear(byteA: string, byteB: string): number {
-  return (256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 1000
+  return (256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 1000;
 }
 
 function fuelTypeDecoder(byte: string): string {
@@ -151,7 +150,7 @@ function convertEngineReferenceTorque(byteA: string, byteB: string): number {
 }
 
 function convertDieselFilter(byteA: string, byteB: string): number {
-  return ((256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 10) - 40;
+  return (256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 10 - 40;
 }
 
 function convertMassAirFlow(byteA: string, byteB: string): number {
@@ -160,11 +159,21 @@ function convertMassAirFlow(byteA: string, byteB: string): number {
 
 function convertEngineCoolant(byte: string): number {
   return parseInt(byte, 16) - 40;
-
 }
 
-function convertOdometer(byteA: string, byteB: string, byteC: string, byteD: string): number {
-  return (parseInt(byteA, 16) * Math.pow(2, 24) + parseInt(byteB, 16) * Math.pow(2, 16) + parseInt(byteC, 16) * Math.pow(2, 8) + parseInt(byteD, 16)) / 10;
+function convertOdometer(
+  byteA: string,
+  byteB: string,
+  byteC: string,
+  byteD: string
+): number {
+  return (
+    (parseInt(byteA, 16) * Math.pow(2, 24) +
+      parseInt(byteB, 16) * Math.pow(2, 16) +
+      parseInt(byteC, 16) * Math.pow(2, 8) +
+      parseInt(byteD, 16)) /
+    10
+  );
 }
 
 function convertDTCRequest(
@@ -173,7 +182,7 @@ function convertDTCRequest(
   byteC: string,
   byteD: string,
   byteE: string,
-  byteF: string,
+  byteF: string
 ) {
   const reply: any = {};
   reply.errors = [];
@@ -280,7 +289,7 @@ function convertLambda(
   byteA: string,
   byteB: string,
   byteC: string,
-  byteD: string,
+  byteD: string
 ) {
   const reply: any = {};
   reply.ratio = ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 2) / 65535;
@@ -306,7 +315,7 @@ function convertLambda2(
   byteA: string,
   byteB: string,
   byteC: string,
-  byteD: string,
+  byteD: string
 ) {
   const reply: any = {};
   reply.ratio = (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 32768;
@@ -343,7 +352,7 @@ function convertExternalTestEquipment(
   byteA: string,
   byteB: string,
   byteC: string,
-  byteD: string,
+  byteD: string
 ) {
   const reply: any = {};
   reply.te1 = bitDecoder(byteA);
@@ -358,7 +367,7 @@ function convertExternalTestEquipment2(
   byteA: string,
   byteB: string,
   byteC: string,
-  byteD: string,
+  byteD: string
 ) {
   const reply: any = {};
   reply.te1 = bitDecoder(byteA) * 10;
@@ -1040,7 +1049,8 @@ const responsePIDS: IObdPID[] = [
     pid: '34',
     bytes: 4,
     name: 'lambdac11',
-    description: 'Bank 1 - Sensor 1/Bank 1 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 1 - Sensor 1/Bank 1 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1051,7 +1061,8 @@ const responsePIDS: IObdPID[] = [
     pid: '35',
     bytes: 4,
     name: 'lambdac12',
-    description: 'Bank 1 - Sensor 2/Bank 1 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 1 - Sensor 2/Bank 1 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1062,7 +1073,8 @@ const responsePIDS: IObdPID[] = [
     pid: '36',
     bytes: 4,
     name: 'lambdac13',
-    description: 'Bank 1 - Sensor 3/Bank 2 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 1 - Sensor 3/Bank 2 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1073,7 +1085,8 @@ const responsePIDS: IObdPID[] = [
     pid: '37',
     bytes: 4,
     name: 'lambdac14',
-    description: 'Bank 1 - Sensor 4/Bank 2 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 1 - Sensor 4/Bank 2 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1084,7 +1097,8 @@ const responsePIDS: IObdPID[] = [
     pid: '38',
     bytes: 4,
     name: 'lambdac21',
-    description: 'Bank 2 - Sensor 1/Bank 3 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 2 - Sensor 1/Bank 3 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1095,7 +1109,8 @@ const responsePIDS: IObdPID[] = [
     pid: '39',
     bytes: 4,
     name: 'lambdac22',
-    description: 'Bank 2 - Sensor 2/Bank 3 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 2 - Sensor 2/Bank 3 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1106,7 +1121,8 @@ const responsePIDS: IObdPID[] = [
     pid: '3A',
     bytes: 4,
     name: 'lambdac23',
-    description: 'Bank 2 - Sensor 3/Bank 4 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 2 - Sensor 3/Bank 4 - Sensor 1 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',
@@ -1117,7 +1133,8 @@ const responsePIDS: IObdPID[] = [
     pid: '3B',
     bytes: 4,
     name: 'lambdac24',
-    description: 'Bank 2 - Sensor 4/Bank 4 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
+    description:
+      'Bank 2 - Sensor 4/Bank 4 - Sensor 2 (wide range O2S) Oxygen Sensors Equivalence Ratio (lambda) / Current',
     min: 0,
     max: 2,
     unit: '(ratio)',

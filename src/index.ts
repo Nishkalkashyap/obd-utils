@@ -1,6 +1,10 @@
 import responsePIDS from './obdInfo';
-import { IObdPID, IObdPIDDescriptor, IParsedOBDResponse, Modes } from './obdTypes';
-
+import {
+  IObdPID,
+  IObdPIDDescriptor,
+  IParsedOBDResponse,
+  Modes,
+} from './obdTypes';
 
 export function parseOBDResponse(hexString: string): IParsedOBDResponse {
   const reply: IParsedOBDResponse = {};
@@ -53,7 +57,7 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
               valueArray[2],
               valueArray[3],
               valueArray[4],
-              valueArray[5],
+              valueArray[5]
             );
             break;
           case 8:
@@ -65,12 +69,12 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
               valueArray[6],
               valueArray[7],
               valueArray[8],
-              valueArray[9],
+              valueArray[9]
             );
             break;
         }
       }
-    })
+    });
   } else if (valueArray[0] === '43') {
     reply.mode = valueArray[0] as Modes;
     responsePIDS.forEach((pid: IObdPID) => {
@@ -89,15 +93,14 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
           valueArray[3],
           valueArray[4],
           valueArray[5],
-          valueArray[6],
+          valueArray[6]
         );
       }
-    })
+    });
   }
 
   return reply;
 }
-
 
 export function getPIDInfo(pid: string): IObdPIDDescriptor | null {
   const responsePid = responsePIDS.find((item) => item.pid === pid);
