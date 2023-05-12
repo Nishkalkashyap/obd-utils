@@ -1,4 +1,4 @@
-name: Test build
+name: Publish to NPM
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
     types:
       - closed
 jobs:
-  publish:
-    name: 'Publish to NPM'
+  update:
+    name: 'Increase version'
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +33,25 @@ jobs:
         if: contains(github.event.pull_request.labels.*.name, 'patch')
         run: npm version patch
       - name: Git push version bump
-        run: git push origin dev --follow-tags --force
+        run: git push origin master --follow-tags --force
       - id: set-version
         name: Output version change
         run: npm pkg get version
+
+  publish:
+    name: 'Publish'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies and build 🔧
+        run: npm ci && npm run build-cli
+      - name: Publish package on NPM 📦
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
