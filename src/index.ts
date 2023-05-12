@@ -1,5 +1,5 @@
 import responsePIDS from './obdInfo';
-import { IObdPID, IObdPIDDescriptor, IParsedOBDResponse, Modes} from './obdTypes';
+import { IObdPID, IObdPIDDescriptor, IParsedOBDResponse, Modes } from './obdTypes';
 
 
 export function parseOBDResponse(hexString: string): IParsedOBDResponse {
@@ -94,15 +94,17 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
       }
     })
   }
+
   return reply;
 }
 
 
-export function getPIDInfo(pid: string): IObdPIDDescriptor | null{
-  const responsePid = responsePIDS.find((item)=>item.pid === pid);
+export function getPIDInfo(pid: string): IObdPIDDescriptor | null {
+  const responsePid = responsePIDS.find((item) => item.pid === pid);
+
   return responsePid || null;
 }
 
-export function getAllPIDs(): IObdPIDDescriptor[]{
+export function getAllPIDs(): IObdPIDDescriptor[] {
   return responsePIDS;
 }

@@ -1,11 +1,12 @@
 /* eslint-disable no-bitwise */
 
-import {IObdPID, Modes,FuelType} from './obdTypes';
+import { IObdPID, Modes, FuelType } from './obdTypes';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 function checkHex(n: string) {
   return /^[0-9A-Fa-f]{1,64}$/.test(n);
 }
+
 function Hex2Bin(n: string) {
   if (!checkHex(n)) {
     return '';
@@ -19,11 +20,14 @@ function zeroFill(number: string, width: number) {
   if (width > 0) {
     return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
   }
+
   return number + ''; // always return a string
 }
+
 function bitDecoder(byte: string): number {
   return parseInt(byte, 2);
 }
+
 function convertPIDSupported(
   byteA: string,
   byteB: string,
@@ -39,16 +43,20 @@ function convertPIDSupported(
       pidStatus.push(perm === '1' ? true : false);
     });
   });
+
   return pidStatus;
 }
+
 function convertFuelSystem(byteA: string, byteB: string) {
   const reply: any = {};
   reply.system1 = bitDecoder(byteA);
   if (byteB) {
     reply.system2 = bitDecoder(byteB);
   }
+
   return reply;
 }
+
 function convertDTCCheck(
   byteA: string,
   byteB: string,
@@ -69,87 +77,96 @@ function convertDTCCheck(
   reply.mil = mil;
   return reply;
 }
-function hexDecoder(byte:string):number{
-  return parseInt(byte,16);
+
+function hexDecoder(byte: string): number {
+  return parseInt(byte, 16);
 }
-function convertCommandedDiesel(byte:string):number{
-  return parseInt(byte,16)/2
+
+function convertCommandedDiesel(byte: string): number {
+  return parseInt(byte, 16) / 2
 }
-function convertTransmissionActualGear(byteA:string,byteB:string):number{
-  return (256*parseInt(byteA,16)+parseInt(byteB,16))/1000
+
+function convertTransmissionActualGear(byteA: string, byteB: string): number {
+  return (256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 1000
 }
-function fuelTypeDecoder(byte:string):string{
-  const fuelInt=parseInt(byte,16);
-  switch(fuelInt){
-      case 0:
-          return FuelType.NOTAVAILABLE;
-      case 1:
-          return FuelType.GASOLINE;
-      case 2:    
-          return FuelType.METHANOL ;       
-      case 3:
-          return FuelType.ETHANOL;
-      case 4:
-          return FuelType.DIESEL;
-      case 5:
-          return FuelType.LPG;
-      case 6:
-          return FuelType.CNG;
-      case 7:
-          return FuelType.PROPANE;
-      case 8:
-          return FuelType.ELECTRIC;
-      case 9:
-          return FuelType.BIFUELGASOLINE;
-      case 10:
-          return FuelType.BIFUELMETHANOL;
-      case 11:
-          return FuelType.BIFUELETHANOL;
-      case 12:
-          return FuelType.BIFUELLPG;
-      case 13:
-          return FuelType.BIFUELCNG;
-      case 14:
-          return FuelType.BIFUELPROPANE;
-      case 15:
-          return FuelType.BIFUELELECTRICITY;
-      case 16:
-          return FuelType.BIFUELCOMBUSTIONENGINE;
-      case 17:
-          return FuelType.HYBRIDGASOLINE;
-      case 18:
-          return FuelType.HYBRIDETHANOL;
-      case 19:
-          return FuelType.HYBRIDDIESEL;
-      case 20:
-          return FuelType.HYBRIDELECTRIC;
-      case 21:
-          return FuelType.HYBRIDCOMBUSTIONENGINE;
-      case 22:
-          return FuelType.HYBRIDREGENERATIVE;
-      case 23:
-          return FuelType.BIFUELDIESEL;
-      default:
-          return 'null';
+
+function fuelTypeDecoder(byte: string): string {
+  const fuelInt = parseInt(byte, 16);
+  switch (fuelInt) {
+    case 0:
+      return FuelType.NOTAVAILABLE;
+    case 1:
+      return FuelType.GASOLINE;
+    case 2:
+      return FuelType.METHANOL;
+    case 3:
+      return FuelType.ETHANOL;
+    case 4:
+      return FuelType.DIESEL;
+    case 5:
+      return FuelType.LPG;
+    case 6:
+      return FuelType.CNG;
+    case 7:
+      return FuelType.PROPANE;
+    case 8:
+      return FuelType.ELECTRIC;
+    case 9:
+      return FuelType.BIFUELGASOLINE;
+    case 10:
+      return FuelType.BIFUELMETHANOL;
+    case 11:
+      return FuelType.BIFUELETHANOL;
+    case 12:
+      return FuelType.BIFUELLPG;
+    case 13:
+      return FuelType.BIFUELCNG;
+    case 14:
+      return FuelType.BIFUELPROPANE;
+    case 15:
+      return FuelType.BIFUELELECTRICITY;
+    case 16:
+      return FuelType.BIFUELCOMBUSTIONENGINE;
+    case 17:
+      return FuelType.HYBRIDGASOLINE;
+    case 18:
+      return FuelType.HYBRIDETHANOL;
+    case 19:
+      return FuelType.HYBRIDDIESEL;
+    case 20:
+      return FuelType.HYBRIDELECTRIC;
+    case 21:
+      return FuelType.HYBRIDCOMBUSTIONENGINE;
+    case 22:
+      return FuelType.HYBRIDREGENERATIVE;
+    case 23:
+      return FuelType.BIFUELDIESEL;
+    default:
+      return 'null';
   }
+}
+
+function convertEngineReferenceTorque(byteA: string, byteB: string): number {
+  return 256 * parseInt(byteA, 16) + parseInt(byteB, 16);
+}
+
+function convertDieselFilter(byteA: string, byteB: string): number {
+  return ((256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 10) - 40;
+}
+
+function convertMassAirFlow(byteA: string, byteB: string): number {
+  return (256 * parseInt(byteA, 16) + parseInt(byteB, 16)) / 32;
+}
+
+function convertEngineCoolant(byte: string): number {
+  return parseInt(byte, 16) - 40;
 
 }
-function convertEngineReferenceTorque (byteA:string,byteB:string):number {
-  return 256*parseInt(byteA,16)+parseInt(byteB,16);
-}
-function convertDieselFilter(byteA:string,byteB:string):number{
-  return ((256*parseInt(byteA,16)+parseInt(byteB,16))/10)-40;
-}
-function convertMassAirFlow(byteA:string,byteB:string):number{
-  return (256*parseInt(byteA,16)+parseInt(byteB,16))/32;
-}
-function convertEngineCoolant(byte:string):number{
-  return parseInt(byte,16)-40;
 
+function convertOdometer(byteA: string, byteB: string, byteC: string, byteD: string): number {
+  return (parseInt(byteA, 16) * Math.pow(2, 24) + parseInt(byteB, 16) * Math.pow(2, 16) + parseInt(byteC, 16) * Math.pow(2, 8) + parseInt(byteD, 16)) / 10;
 }
-function convertOdometer(byteA:string,byteB:string,byteC:string,byteD:string):number{
-  return (parseInt(byteA,16)*Math.pow(2,24)+parseInt(byteB,16)*Math.pow(2,16)+parseInt(byteC,16)*Math.pow(2,8)+parseInt(byteD,16))/10;
-}
+
 function convertDTCRequest(
   byteA: string,
   byteB: string,
@@ -192,56 +209,73 @@ function convertDTCRequest(
     const secondChar = (firstByte >> 4) % 4;
     const thirdChar = firstByte % 16;
     codeString = firstChar + secondChar + thirdChar + byte2;
+
     return codeString;
   };
 
   reply.errors[0] = decodeDTCCode(byteA, byteB);
   reply.errors[1] = decodeDTCCode(byteC, byteD);
   reply.errors[2] = decodeDTCCode(byteE, byteF);
+
   return reply;
 }
+
 function convertLoad(byte: string) {
   return parseInt(byte, 16) * (100 / 256);
 }
+
 function convertTemp(byte: string) {
   return parseInt(byte, 16) - 40;
 }
+
 function convertFuelTrim(byte: string) {
   return (parseInt(byte, 16) - 128) * (100 / 128);
 }
+
 function convertFuelRailPressure(byte: string) {
   return parseInt(byte, 16) * 3;
 }
+
 function convertIntakePressure(byte: string) {
   return parseInt(byte, 16);
 }
+
 function convertRPM(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 4;
 }
+
 function convertSpeed(byte: string) {
   return parseInt(byte, 16);
 }
+
 function convertSparkAdvance(byte: string) {
   return parseInt(byte, 16) / 2 - 64;
 }
+
 function convertAirFlowRate(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256.0 + parseInt(byteB, 16)) / 100;
 }
+
 function convertThrottlePos(byte: string) {
   return (parseInt(byte, 16) * 100) / 255;
 }
+
 function convertOxygenSensorOutput(byte: string) {
   return parseInt(byte, 16) * 0.005;
 }
+
 function convertRuntime(byteA: string, byteB: string) {
   return parseInt(byteA, 16) * 256.0 + parseInt(byteB, 16);
 }
+
 function convertfrpm(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.079;
 }
+
 function convertfrpd(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 10;
 }
+
 function convertLambda(
   byteA: string,
   byteB: string,
@@ -252,17 +286,22 @@ function convertLambda(
   reply.ratio = ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 2) / 65535;
   reply.voltage =
     ((parseInt(byteC, 16) * 256 + parseInt(byteD, 16)) * 8) / 65535;
+
   return reply;
 }
+
 function convertPercentA(byte: string) {
   return (parseInt(byte, 16) * 100) / 255;
 }
+
 function convertPercentB(byte: string) {
   return ((parseInt(byte, 16) - 128) * 100) / 128;
 }
+
 function convertDistanceSinceCodesCleared(byteA: string, byteB: string) {
   return parseInt(byteA, 16) * 256 + parseInt(byteB, 16);
 }
+
 function convertLambda2(
   byteA: string,
   byteB: string,
@@ -272,26 +311,34 @@ function convertLambda2(
   const reply: any = {};
   reply.ratio = (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 32768;
   reply.voltage = (parseInt(byteC, 16) * 256 + parseInt(byteD, 16)) / 256 - 128;
+
   return reply;
 }
+
 function convertCatalystTemperature(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 10 - 40;
 }
+
 function convertControlModuleVoltage(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 1000;
 }
+
 function convertAbsoluteLoad(byteA: string, byteB: string) {
   return ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 100) / 255;
 }
+
 function convertLambda3(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 32768;
 }
+
 function convertAmbientAirTemp(byte: string) {
   return parseInt(byte, 16) - 40;
 }
+
 function convertMinutes(byteA: string, byteB: string) {
   return parseInt(byteA, 16) * 256 + parseInt(byteB, 16);
 }
+
 function convertExternalTestEquipment(
   byteA: string,
   byteB: string,
@@ -303,8 +350,10 @@ function convertExternalTestEquipment(
   reply.te2 = bitDecoder(byteB);
   reply.te3 = bitDecoder(byteC);
   reply.te4 = bitDecoder(byteD) * 10;
+
   return reply;
 }
+
 function convertExternalTestEquipment2(
   byteA: string,
   byteB: string,
@@ -316,26 +365,34 @@ function convertExternalTestEquipment2(
   reply.te2 = bitDecoder(byteB);
   reply.te3 = bitDecoder(byteC);
   reply.te4 = bitDecoder(byteD);
+
   return reply;
 }
+
 function convertAbsoluteVaporPressure(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) / 200;
 }
+
 function convertSystemVaporPressure(byteA: string, byteB: string) {
   return parseInt(byteA, 16) * 256 + parseInt(byteB, 16) - 32767;
 }
+
 function convertShortOxygenSensorOutput(byteA: string, byteB: string) {
   const reply: any = {};
   reply.bank1 = ((parseInt(byteA, 16) - 128) * 100) / 128;
   reply.bank2 = ((parseInt(byteB, 16) - 128) * 100) / 128;
+
   return reply;
 }
+
 function convertFuelRailPressureAbs(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 10;
 }
+
 function convertFuelInjectionTiming(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16) - 26880) / 128;
 }
+
 function convertEngineFuelRate(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05;
 }
@@ -356,6 +413,7 @@ function notSupported() {
 function convertVIN_count(byte: string) {
   return byte;
 }
+
 function convertVIN(byte: string) {
   const byteArray = byte.split('');
   let vin = '';
@@ -364,6 +422,7 @@ function convertVIN(byte: string) {
     tmp = parseInt(tmp.toString(), 16);
     vin += String.fromCharCode(tmp);
   }
+
   return vin;
 }
 
@@ -963,7 +1022,6 @@ const responsePIDS: IObdPID[] = [
     min: -8192,
     max: 8192,
     unit: 'Pa',
-    
   },
   // pending -->
   {
@@ -987,8 +1045,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '35',
     bytes: 4,
@@ -998,8 +1056,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '36',
     bytes: 4,
@@ -1009,8 +1067,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '37',
     bytes: 4,
@@ -1020,8 +1078,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '38',
     bytes: 4,
@@ -1031,8 +1089,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '39',
     bytes: 4,
@@ -1042,8 +1100,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '3A',
     bytes: 4,
@@ -1053,8 +1111,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '3B',
     bytes: 4,
@@ -1064,8 +1122,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '3C',
     bytes: 2,
@@ -1075,8 +1133,8 @@ const responsePIDS: IObdPID[] = [
     max: 6513.5,
     unit: 'Celsius',
     convertToUseful: convertCatalystTemperature,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '3D',
     bytes: 2,
@@ -1086,8 +1144,8 @@ const responsePIDS: IObdPID[] = [
     max: 6513.5,
     unit: 'Celsius',
     convertToUseful: convertCatalystTemperature,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '3E',
     bytes: 2,
@@ -1097,8 +1155,8 @@ const responsePIDS: IObdPID[] = [
     max: 6513.5,
     unit: 'Celsius',
     convertToUseful: convertCatalystTemperature,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '3F',
     bytes: 2,
@@ -1108,8 +1166,8 @@ const responsePIDS: IObdPID[] = [
     max: 6513.5,
     unit: 'Celsius',
     convertToUseful: convertCatalystTemperature,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '40',
     bytes: 4,
@@ -1119,9 +1177,9 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-},
-// <-- pending
-{
+  },
+  // <-- pending
+  {
     mode: modeRealTime,
     pid: '41',
     bytes: 4,
@@ -1131,9 +1189,9 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: bitDecoder,
-},
-// pending -->
-{
+  },
+  // pending -->
+  {
     mode: modeRealTime,
     pid: '42',
     bytes: 2,
@@ -1143,8 +1201,8 @@ const responsePIDS: IObdPID[] = [
     max: 65535,
     unit: 'V',
     convertToUseful: convertControlModuleVoltage,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '43',
     bytes: 2,
@@ -1154,8 +1212,8 @@ const responsePIDS: IObdPID[] = [
     max: 25700,
     unit: '%',
     convertToUseful: convertAbsoluteLoad,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '44',
     bytes: 2,
@@ -1165,8 +1223,8 @@ const responsePIDS: IObdPID[] = [
     max: 2,
     unit: '(ratio)',
     convertToUseful: convertLambda3,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '45',
     bytes: 1,
@@ -1176,8 +1234,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '46',
     bytes: 1,
@@ -1187,8 +1245,8 @@ const responsePIDS: IObdPID[] = [
     max: 215,
     unit: 'Celsius',
     convertToUseful: convertAmbientAirTemp,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '47',
     bytes: 1,
@@ -1198,8 +1256,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '48',
     bytes: 1,
@@ -1209,8 +1267,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '49',
     bytes: 1,
@@ -1220,8 +1278,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '4A',
     bytes: 1,
@@ -1231,8 +1289,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '4B',
     bytes: 1,
@@ -1242,8 +1300,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '4C',
     bytes: 1,
@@ -1253,8 +1311,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '4D',
     bytes: 2,
@@ -1264,8 +1322,8 @@ const responsePIDS: IObdPID[] = [
     max: 65535,
     unit: 'minutes',
     convertToUseful: convertMinutes,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '4E',
     bytes: 2,
@@ -1275,8 +1333,8 @@ const responsePIDS: IObdPID[] = [
     max: 65535,
     unit: 'minutes',
     convertToUseful: convertMinutes,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '4F',
     bytes: 4,
@@ -1286,8 +1344,8 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertExternalTestEquipment,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '50',
     bytes: 4,
@@ -1297,8 +1355,8 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertExternalTestEquipment2,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '51',
     bytes: 1,
@@ -1308,8 +1366,8 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: fuelTypeDecoder,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '52',
     bytes: 1,
@@ -1319,8 +1377,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '53',
     bytes: 2,
@@ -1330,8 +1388,8 @@ const responsePIDS: IObdPID[] = [
     max: 327675,
     unit: 'kPa',
     convertToUseful: convertAbsoluteVaporPressure,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '54',
     bytes: 2,
@@ -1341,8 +1399,8 @@ const responsePIDS: IObdPID[] = [
     max: 32767,
     unit: 'Pa',
     convertToUseful: convertSystemVaporPressure,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '55',
     bytes: 2,
@@ -1352,8 +1410,8 @@ const responsePIDS: IObdPID[] = [
     max: 99.22,
     unit: '%',
     convertToUseful: convertShortOxygenSensorOutput,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '56',
     bytes: 2,
@@ -1363,8 +1421,8 @@ const responsePIDS: IObdPID[] = [
     max: 99.22,
     unit: '%',
     convertToUseful: convertShortOxygenSensorOutput,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '57',
     bytes: 2,
@@ -1374,8 +1432,8 @@ const responsePIDS: IObdPID[] = [
     max: 99.22,
     unit: '%',
     convertToUseful: convertShortOxygenSensorOutput,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '58',
     bytes: 2,
@@ -1385,8 +1443,8 @@ const responsePIDS: IObdPID[] = [
     max: 99.22,
     unit: '%',
     convertToUseful: convertShortOxygenSensorOutput,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '59',
     bytes: 2,
@@ -1396,8 +1454,8 @@ const responsePIDS: IObdPID[] = [
     max: 655350,
     unit: 'kPa',
     convertToUseful: convertFuelRailPressureAbs,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '5A',
     bytes: 1,
@@ -1407,8 +1465,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '5B',
     bytes: 1,
@@ -1418,8 +1476,8 @@ const responsePIDS: IObdPID[] = [
     max: 100,
     unit: '%',
     convertToUseful: convertPercentA,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '5C',
     bytes: 1,
@@ -1429,8 +1487,8 @@ const responsePIDS: IObdPID[] = [
     max: 210,
     unit: '°C',
     convertToUseful: convertTemp,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '5D',
     bytes: 2,
@@ -1440,8 +1498,8 @@ const responsePIDS: IObdPID[] = [
     max: 301.992,
     unit: '°',
     convertToUseful: convertFuelInjectionTiming,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '5E',
     bytes: 2,
@@ -1451,8 +1509,8 @@ const responsePIDS: IObdPID[] = [
     max: 3212.75,
     unit: 'L/h',
     convertToUseful: convertEngineFuelRate,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '5F',
     bytes: 1,
@@ -1462,10 +1520,10 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: bitDecoder,
-},
-//added some new pid entries
-{
-    mode:modeRealTime,
+  },
+  //added some new pid entries
+  {
+    mode: modeRealTime,
     pid: '61',
     bytes: 1,
     name: 'dept',
@@ -1473,9 +1531,9 @@ const responsePIDS: IObdPID[] = [
     min: -125,
     max: 130,
     unit: '%',
-    convertToUseful:convertEngineTorque,
-},
-{
+    convertToUseful: convertEngineTorque,
+  },
+  {
     mode: modeRealTime,
     pid: '62',
     bytes: 1,
@@ -1485,8 +1543,8 @@ const responsePIDS: IObdPID[] = [
     max: 125,
     unit: '%',
     convertToUseful: convertEngineTorque,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '63',
     bytes: 2,
@@ -1496,8 +1554,8 @@ const responsePIDS: IObdPID[] = [
     max: 65535,
     unit: 'N*m',
     convertToUseful: convertEngineReferenceTorque,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '64',
     bytes: 1,
@@ -1507,8 +1565,8 @@ const responsePIDS: IObdPID[] = [
     max: 130,
     unit: '%',
     convertToUseful: convertEngineTorque,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '66',
     bytes: 2,
@@ -1518,8 +1576,8 @@ const responsePIDS: IObdPID[] = [
     max: 2047.96875,
     unit: 'g/s',
     convertToUseful: convertMassAirFlow,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '67',
     bytes: 1,
@@ -1529,8 +1587,8 @@ const responsePIDS: IObdPID[] = [
     max: 215,
     unit: 'Celsius',
     convertToUseful: convertEngineCoolant,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '68',
     bytes: 1,
@@ -1540,8 +1598,8 @@ const responsePIDS: IObdPID[] = [
     max: 215,
     unit: 'Celsius',
     convertToUseful: convertEngineCoolant,
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '6B',
     bytes: 5,
@@ -1550,8 +1608,8 @@ const responsePIDS: IObdPID[] = [
     min: -40,
     max: 215,
     unit: 'Celsius',
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '6D',
     bytes: 6,
@@ -1560,8 +1618,8 @@ const responsePIDS: IObdPID[] = [
     min: -40,
     max: 215,
     unit: 'Celsius',
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '6E',
     bytes: 5,
@@ -1570,8 +1628,8 @@ const responsePIDS: IObdPID[] = [
     min: -40,
     max: 215,
     unit: 'Celsius',
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '73',
     bytes: 5,
@@ -1580,8 +1638,8 @@ const responsePIDS: IObdPID[] = [
     min: -40,
     max: 215,
     unit: 'Celsius',
-},
-{
+  },
+  {
     mode: modeRealTime,
     pid: '78',
     bytes: 9,
@@ -1591,84 +1649,84 @@ const responsePIDS: IObdPID[] = [
     max: 215,
     unit: 'Celsius',
     convertToUseful: convertExhastGasTemperature,
-},
-{
-  mode: modeRealTime,
-  pid: '7C',
-  bytes: 2,
-  name: 'dpft',
-  description: 'Diesel particular filter temperature',
-  unit: 'Celsius',
-  min: -40 ,
-  max:6513.5,
-  convertToUseful: convertDieselFilter,
-},
-{
-    mode:modeRealTime,
-    pid:'8D',
-    bytes:1,
-    name:'Thr pos G',
-    description:'Throttle position G',
-    min:0,
-    max:100,
-    unit:'%',
+  },
+  {
+    mode: modeRealTime,
+    pid: '7C',
+    bytes: 2,
+    name: 'dpft',
+    description: 'Diesel particular filter temperature',
+    unit: 'Celsius',
+    min: -40,
+    max: 6513.5,
+    convertToUseful: convertDieselFilter,
+  },
+  {
+    mode: modeRealTime,
+    pid: '8D',
+    bytes: 1,
+    name: 'Thr pos G',
+    description: 'Throttle position G',
+    min: 0,
+    max: 100,
+    unit: '%',
     convertToUseful: convertThrottlePos,
-},
-{
-    mode:modeRealTime,
-    pid:'8E',
-    bytes:1,
-    name:'efpt',
-    description:'Engine Friction - Percent Torque',
-    min:-125,
-    max:130,
-    unit:'%',
+  },
+  {
+    mode: modeRealTime,
+    pid: '8E',
+    bytes: 1,
+    name: 'efpt',
+    description: 'Engine Friction - Percent Torque',
+    min: -125,
+    max: 130,
+    unit: '%',
     convertToUseful: convertEngineTorque,
-},
-{
-    mode:modeRealTime,
-    pid:'A2',
-    bytes:2,
-    name:'cfr',
-    description:'Cylinder fuel rate',
-    min:0,
-    max:2047.96875,
-    unit:'mg/stroke',
+  },
+  {
+    mode: modeRealTime,
+    pid: 'A2',
+    bytes: 2,
+    name: 'cfr',
+    description: 'Cylinder fuel rate',
+    min: 0,
+    max: 2047.96875,
+    unit: 'mg/stroke',
     convertToUseful: convertMassAirFlow,
-},
-{
-    mode:modeRealTime,
-    pid:'A4',
-    bytes:2,
-    name:'tag',
-    description:'Transmission actual gear',
-    min:0,
-    max:65.535,
-    unit:'ratio',
+  },
+  {
+    mode: modeRealTime,
+    pid: 'A4',
+    bytes: 2,
+    name: 'tag',
+    description: 'Transmission actual gear',
+    min: 0,
+    max: 65.535,
+    unit: 'ratio',
     convertToUseful: convertTransmissionActualGear,
-},
-{
-    mode:modeRealTime,
-    pid:'A5',
-    bytes:1,
-    name:'cdefd',
-    description:'Commanded Diesel Exhaust Fluid Dosing',
-    min:0,
-    max:127.5,
-    unit:'%',
+  },
+  {
+    mode: modeRealTime,
+    pid: 'A5',
+    bytes: 1,
+    name: 'cdefd',
+    description: 'Commanded Diesel Exhaust Fluid Dosing',
+    min: 0,
+    max: 127.5,
+    unit: '%',
     convertToUseful: convertCommandedDiesel,
-},
-{
-    mode:modeRealTime,
-    pid:'A6',
-    bytes:4,
-    name:'odo',
-    description:'Odometer',
-    min:0,
-    max:429496729.5	,
-    unit:'km',
+  },
+  {
+    mode: modeRealTime,
+    pid: 'A6',
+    bytes: 4,
+    name: 'odo',
+    description: 'Odometer',
+    min: 0,
+    max: 429496729.5,
+    unit: 'km',
     convertToUseful: convertOdometer,
-},
+  },
 
   //DTC's
   //   {
