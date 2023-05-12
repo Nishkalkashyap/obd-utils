@@ -190,25 +190,29 @@ Index | PID | Description | Units
 94 | 5D | Fuel injection timing | °
 95 | 5E | Engine fuel rate | L/h
 96 | 5F | Emission requirements to which vehicle is designed | Bit Encoded
-97 | 61 | Demanded engine Percent Torque | %
-98 | 62 | Actual engine - percent torque | %
-99 | 63 | Engine reference torque | N*m
-100 | 64 | Engine pct. torque(idle) | %
-101 | 66 | Mass air flow sensor(A) | g/s
-102 | 67 | Engine coolant temperature(sensor 1) | Celsius
-103 | 68 | Intake air temperature(sensor 1) | Celsius
-104 | 6B | Exhaust gas recirculation temperature | Celsius
-105 | 6D | Fuel pressure control system | Celsius
-106 | 6E | Injection pressure control system | Celsius
-107 | 73 | Exhaust pressure | Celsius
-108 | 78 | Exhaust Gas temperature Bank 1 | Celsius
-109 | 7C | Diesel particular filter temperature | Celsius
-110 | 8D | Throttle position G | %
-111 | 8E | Engine Friction - Percent Torque | %
-112 | A2 | Cylinder fuel rate | mg/stroke
-113 | A4 | Transmission actual gear | ratio
-114 | A5 | Commanded Diesel Exhaust Fluid Dosing | %
-115 | A6 | Odometer | km
+97 | 60 | PIDs supported 61-80 | Bit Encoded
+98 | 61 | Demanded engine Percent Torque | %
+99 | 62 | Actual engine - percent torque | %
+100 | 63 | Engine reference torque | N*m
+101 | 64 | Engine pct. torque(idle) | %
+102 | 66 | Mass air flow sensor(A) | g/s
+103 | 67 | Engine coolant temperature(sensor 1) | Celsius
+104 | 68 | Intake air temperature(sensor 1) | Celsius
+105 | 6B | Exhaust gas recirculation temperature | Celsius
+106 | 6D | Fuel pressure control system | Celsius
+107 | 6E | Injection pressure control system | Celsius
+108 | 73 | Exhaust pressure | Celsius
+109 | 78 | Exhaust Gas temperature Bank 1 | Celsius
+110 | 7C | Diesel particular filter temperature | Celsius
+111 | 80 | PIDs supported 81-A0 | Bit Encoded
+112 | 8D | Throttle position G | %
+113 | 8E | Engine Friction - Percent Torque | %
+114 | A0 | PIDs supported A1-C0 | Bit Encoded
+115 | A2 | Cylinder fuel rate | mg/stroke
+116 | A4 | Transmission actual gear | ratio
+117 | A5 | Commanded Diesel Exhaust Fluid Dosing | %
+118 | A6 | Odometer | km
+119 | C0 | PIDs supported C1-E0 | Bit Encoded
 
 <!-- end-table-here -->
 
