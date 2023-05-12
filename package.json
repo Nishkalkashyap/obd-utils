@@ -3,7 +3,10 @@
   "version": "0.0.3",
   "description": "Provides utilities for OBD2",
   "author": "MinervaS <tech@minervas.it>",
-  "repository": "https://github.com/MinervaScompany/obd-utils.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinervaScompany/obd-utils.git"
+  },
   "homepage": "https://github.com/MinervaScompany/obd-utils",
   "bugs": {
     "url": "https://github.com/Nishkalkashyap/obd-utils/issues"
@@ -11,7 +14,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "./lib/umd/index.js",
+  "main": "./lib/es6/index.js",
   "keywords": [
     "OBD",
     "OBD2",
@@ -34,7 +37,9 @@
     "prepublishOnly": "npm run update-readme && npm run build-all && npm run build-cli",
     "lint": "eslint . --ext .jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
-  "bin": "./bin/scripts/cli.js",
+  "bin": {
+    "minervasobd-utils": "bin/scripts/cli.js"
+  },
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^16.18.28",
@@ -50,5 +55,8 @@
   "dependencies": {
     "commander": "^8.1.0"
   },
-  "types": "./lib/umd/index.d.ts"
+  "types": "./lib/es6/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  }
 }
