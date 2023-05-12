@@ -1,0 +1,26 @@
+name: 'PR Label Checker'
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - reopened
+      - labeled
+      - unlabeled
+      - synchronize
+jobs:
+  check_labels:
+    name: 'Check PR Labels'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mheap/github-action-required-labels@v4
+        with:
+          mode: exactly
+          count: 1
+          labels: 'major, minor, patch'
+          add_comment: true
+          message: "This PR is being prevented from merging because you have added one of our blocking labels: {{ provided }}. You'll need to remove it before this PR can be merged."
