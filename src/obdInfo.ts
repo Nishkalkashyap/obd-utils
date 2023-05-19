@@ -1538,6 +1538,17 @@ const responsePIDS: IObdPID[] = [
     unit: 'Bit Encoded',
     convertToUseful: bitDecoder,
   },
+  {
+    mode: modeRealTime,
+    pid: '60',
+    bytes: 4,
+    name: 'piddsupp6',
+    description: 'PIDs supported 61-80',
+    min: 0,
+    max: 0,
+    unit: 'Bit Encoded',
+    convertToUseful: convertPIDSupported,
+  },
   //added some new pid entries
   {
     mode: modeRealTime,
@@ -1680,6 +1691,17 @@ const responsePIDS: IObdPID[] = [
   },
   {
     mode: modeRealTime,
+    pid: '80',
+    bytes: 4,
+    name: 'piddsupp8',
+    description: 'PIDs supported 81-A0',
+    min: 0,
+    max: 0,
+    unit: 'Bit Encoded',
+    convertToUseful: convertPIDSupported,
+  },
+  {
+    mode: modeRealTime,
     pid: '8D',
     bytes: 1,
     name: 'Thr pos G',
@@ -1699,6 +1721,17 @@ const responsePIDS: IObdPID[] = [
     max: 130,
     unit: '%',
     convertToUseful: convertEngineTorque,
+  },
+  {
+    mode: modeRealTime,
+    pid: 'A0',
+    bytes: 4,
+    name: 'piddsuppA',
+    description: 'PIDs supported A1-C0',
+    min: 0,
+    max: 0,
+    unit: 'Bit Encoded',
+    convertToUseful: convertPIDSupported,
   },
   {
     mode: modeRealTime,
@@ -1743,6 +1776,17 @@ const responsePIDS: IObdPID[] = [
     max: 429496729.5,
     unit: 'km',
     convertToUseful: convertOdometer,
+  },
+  {
+    mode: modeRealTime,
+    pid: 'C0',
+    bytes: 4,
+    name: 'piddsuppC',
+    description: 'PIDs supported C1-E0',
+    min: 0,
+    max: 0,
+    unit: 'Bit Encoded',
+    convertToUseful: convertPIDSupported,
   },
 
   //DTC's
