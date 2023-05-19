@@ -35,7 +35,8 @@
     "build-all": "npm run build-umd && npm run build-cjs && npm run build-es6",
     "update-readme": "npx ts-node ./scripts/generate-pid-readme.ts",
     "prepublishOnly": "npm run update-readme && npm run build-all && npm run build-cli",
-    "lint": "eslint . --ext .jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --fix"
   },
   "bin": {
     "minervasobd-utils": "bin/scripts/cli.js"

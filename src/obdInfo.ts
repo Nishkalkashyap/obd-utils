@@ -1548,7 +1548,7 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-},
+  },
   //added some new pid entries
   {
     mode: modeRealTime,
@@ -1699,7 +1699,7 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-},
+  },
   {
     mode: modeRealTime,
     pid: '8D',
@@ -1732,7 +1732,7 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-},
+  },
   {
     mode: modeRealTime,
     pid: 'A2',
@@ -1787,7 +1787,7 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-},
+  },
 
   //DTC's
   //   {
