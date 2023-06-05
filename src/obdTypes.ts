@@ -1,7 +1,7 @@
 export interface IObdPID {
   mode: Modes;
   pid: string | undefined;
-  bytes: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 9;
+  bytes: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 9 | 17;
   name: string;
   description: string;
   min: number;

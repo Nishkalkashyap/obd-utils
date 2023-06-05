@@ -424,14 +424,22 @@ function convertVIN_count(byte: string) {
 }
 
 function convertVIN(byte: string) {
-  const byteArray = byte.split('');
+  const byteArray = byte.toString().split(",");
   let vin = '';
-  for (const i in byteArray) {
-    let tmp = parseInt(byteArray[i]);
-    tmp = parseInt(tmp.toString(), 16);
+  let tmp=0;
+  if(!(byteArray[1]== '02') || !(byteArray[2] == '01')){
+    return 'Incompatible value';
+  }
+  for (var i=3;i<byteArray.length;i++) {
+    if(byteArray[i].match('[a-zA-Z]+')){
+      tmp=parseInt(byteArray[i],16);
+    }
+    else{
+     tmp = parseInt(byteArray[i]);
+     tmp = parseInt(tmp.toString(), 16);
+    }
     vin += String.fromCharCode(tmp);
   }
-
   return vin;
 }
 
@@ -451,7 +459,7 @@ const PIDS = {
 const modeRealTime: Modes = Modes['01'];
 const modeRequestDTC: Modes = Modes['03'];
 const modeClearDTC: Modes = Modes['04'];
-const modeVin: Modes = Modes['09'];
+const modeVehicleInformation: Modes = Modes['09'];
 
 const responsePIDS: IObdPID[] = [
   //Realtime data
@@ -1787,7 +1795,7 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-  },
+},
 
   //DTC's
   //   {
