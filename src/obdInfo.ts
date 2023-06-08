@@ -424,19 +424,18 @@ function convertVIN_count(byte: string) {
 }
 
 function convertVIN(byte: string) {
-  const byteArray = byte.toString().split(",");
+  const byteArray = byte.toString().split(',');
   let vin = '';
-  let tmp=0;
-  if(!(byteArray[1]== '02') || !(byteArray[2] == '01')){
+  let tmp = 0;
+  if (byteArray[1] !== '02' || byteArray[2] !== '01') {
     return 'Incompatible value';
   }
-  for (var i=3;i<byteArray.length;i++) {
-    if(byteArray[i].match('[a-zA-Z]+')){
-      tmp=parseInt(byteArray[i],16);
-    }
-    else{
-     tmp = parseInt(byteArray[i]);
-     tmp = parseInt(tmp.toString(), 16);
+  for (let i = 3; i < byteArray.length; i++) {
+    if (/[a-zA-Z]+/.exec(byteArray[i])) {
+      tmp = parseInt(byteArray[i], 16);
+    } else {
+      tmp = parseInt(byteArray[i]);
+      tmp = parseInt(tmp.toString(), 16);
     }
     vin += String.fromCharCode(tmp);
   }
@@ -610,7 +609,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: PIDS.VEHICLE_SPEED_SENSOR,
     bytes: 1,
-    name: 'vss',
+    name: 'speed',
     description: 'Vehicle Speed Sensor',
     min: 0,
     max: 255,
@@ -1000,7 +999,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '2F',
     bytes: 1,
-    name: 'fli',
+    name: 'fuelLevelInput',
     description: 'Fuel Level Input',
     min: 0,
     max: 100,
@@ -1264,7 +1263,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '46',
     bytes: 1,
-    name: 'aat',
+    name: 'temperature',
     description: 'Ambient air temperature',
     min: -40,
     max: 215,
@@ -1297,7 +1296,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '49',
     bytes: 1,
-    name: 'app_d',
+    name: 'accelerator',
     description: 'Accelerator Pedal Position D',
     min: 0,
     max: 100,
@@ -1528,7 +1527,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '5E',
     bytes: 2,
-    name: 'enginefrate',
+    name: 'fuelRate',
     description: 'Engine fuel rate',
     min: 0,
     max: 3212.75,
@@ -1562,7 +1561,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '61',
     bytes: 1,
-    name: 'dept',
+    name: 'percentTorque',
     description: 'Demanded engine Percent Torque',
     min: -125,
     max: 130,
@@ -1756,7 +1755,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: 'A4',
     bytes: 2,
-    name: 'tag',
+    name: 'gear',
     description: 'Transmission actual gear',
     min: 0,
     max: 65.535,
@@ -1778,7 +1777,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: 'A6',
     bytes: 4,
-    name: 'odo',
+    name: 'odometer',
     description: 'Odometer',
     min: 0,
     max: 429496729.5,
@@ -1795,7 +1794,7 @@ const responsePIDS: IObdPID[] = [
     max: 0,
     unit: 'Bit Encoded',
     convertToUseful: convertPIDSupported,
-},
+  },
 
   //DTC's
   //   {

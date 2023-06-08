@@ -1,4 +1,3 @@
-import { Mode } from 'fs';
 import responsePIDS from './obdInfo';
 import {
   IObdPID,
@@ -6,7 +5,6 @@ import {
   IParsedOBDResponse,
   Modes,
 } from './obdTypes';
-import { validateHeaderName } from 'http';
 
 export function parseOBDResponse(hexString: string): IParsedOBDResponse {
   const reply: IParsedOBDResponse = {};
@@ -99,7 +97,7 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse {
         );
       }
     });
-  } else if(valueArray[0] === '49'){
+  } else if (valueArray[0] === '49') {
     reply.mode = valueArray[0] as Modes;
     responsePIDS.forEach((pid: IObdPID) => {
       if (pid.mode === '09') {
