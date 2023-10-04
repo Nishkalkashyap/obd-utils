@@ -1044,7 +1044,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '33',
     bytes: 1,
-    name: 'baro',
+    name: 'pressure',
     description: 'Barometric Pressure',
     min: 0,
     max: 255,
