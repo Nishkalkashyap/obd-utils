@@ -402,8 +402,12 @@ function convertFuelInjectionTiming(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16) - 26880) / 128;
 }
 
+function convertEngineFuelRateMin(byteA: string, byteB: string) {
+  return ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05) / 60;
+}
+
 function convertEngineFuelRate(byteA: string, byteB: string) {
-  return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05;
+  return ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05);
 }
 
 function convertEngineTorque(byte: string) {
@@ -1021,7 +1025,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '31',
     bytes: 2,
-    name: 'clr_dist',
+    name: 'odometer',
     description: 'Distance since diagnostic trouble codes cleared',
     min: 0,
     max: 65535,
@@ -1219,7 +1223,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: '42',
     bytes: 2,
-    name: 'vpwr',
+    name: 'moduleVoltage',
     description: 'Control module voltage',
     min: 0,
     max: 65535,
@@ -1531,8 +1535,8 @@ const responsePIDS: IObdPID[] = [
     description: 'Engine fuel rate',
     min: 0,
     max: 3212.75,
-    unit: 'L/h',
-    convertToUseful: convertEngineFuelRate,
+    unit: 'L/min',
+    convertToUseful: convertEngineFuelRateMin,
   },
   {
     mode: modeRealTime,
@@ -1557,6 +1561,17 @@ const responsePIDS: IObdPID[] = [
     convertToUseful: convertPIDSupported,
   },
   //added some new pid entries
+  {
+    mode: modeRealTime,
+    pid: '9D',
+    bytes: 4,
+    name: 'fuelRateGS',
+    description: 'Engine fuel rate',
+    min: 0,
+    max: 3212750.0,
+    unit: 'g/s',
+    convertToUseful: convertEngineFuelRate,
+  },
   {
     mode: modeRealTime,
     pid: '61',
@@ -1777,7 +1792,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: 'A6',
     bytes: 4,
-    name: 'odometer',
+    name: 'odo',
     description: 'Odometer',
     min: 0,
     max: 429496729.5,
