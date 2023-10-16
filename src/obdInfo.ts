@@ -308,7 +308,7 @@ function convertPercentB(byte: string) {
 }
 
 function convertDistanceSinceCodesCleared(byteA: string, byteB: string) {
-  return parseInt(byteA, 16) * 256 + parseInt(byteB, 16);
+  return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 1000;
 }
 
 function convertLambda2(
@@ -407,7 +407,7 @@ function convertEngineFuelRateMin(byteA: string, byteB: string) {
 }
 
 function convertEngineFuelRate(byteA: string, byteB: string) {
-  return ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05);
+  return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05;
 }
 
 function convertEngineTorque(byte: string) {
@@ -1029,7 +1029,7 @@ const responsePIDS: IObdPID[] = [
     description: 'Distance since diagnostic trouble codes cleared',
     min: 0,
     max: 65535,
-    unit: 'km',
+    unit: 'm',
     convertToUseful: convertDistanceSinceCodesCleared,
   },
   // <-- pending
