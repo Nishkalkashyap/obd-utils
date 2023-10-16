@@ -308,7 +308,7 @@ function convertPercentB(byte: string) {
 }
 
 function convertDistanceSinceCodesCleared(byteA: string, byteB: string) {
-  return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 1000;
+  return parseInt(byteA, 16) * 256 + parseInt(byteB, 16);
 }
 
 function convertLambda2(
@@ -400,10 +400,6 @@ function convertFuelRailPressureAbs(byteA: string, byteB: string) {
 
 function convertFuelInjectionTiming(byteA: string, byteB: string) {
   return (parseInt(byteA, 16) * 256 + parseInt(byteB, 16) - 26880) / 128;
-}
-
-function convertEngineFuelRateMin(byteA: string, byteB: string) {
-  return ((parseInt(byteA, 16) * 256 + parseInt(byteB, 16)) * 0.05) / 60;
 }
 
 function convertEngineFuelRate(byteA: string, byteB: string) {
@@ -1028,8 +1024,8 @@ const responsePIDS: IObdPID[] = [
     name: 'odometer',
     description: 'Distance since diagnostic trouble codes cleared',
     min: 0,
-    max: 65535000,
-    unit: 'm',
+    max: 65535,
+    unit: 'km',
     convertToUseful: convertDistanceSinceCodesCleared,
   },
   // <-- pending
@@ -1535,8 +1531,8 @@ const responsePIDS: IObdPID[] = [
     description: 'Engine fuel rate',
     min: 0,
     max: 3212.75,
-    unit: 'L/min',
-    convertToUseful: convertEngineFuelRateMin,
+    unit: 'L/h',
+    convertToUseful: convertEngineFuelRate,
   },
   {
     mode: modeRealTime,
