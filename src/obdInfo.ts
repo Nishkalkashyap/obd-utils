@@ -1028,7 +1028,7 @@ const responsePIDS: IObdPID[] = [
     name: 'odometer',
     description: 'Distance since diagnostic trouble codes cleared',
     min: 0,
-    max: 65535,
+    max: 65535000,
     unit: 'm',
     convertToUseful: convertDistanceSinceCodesCleared,
   },
