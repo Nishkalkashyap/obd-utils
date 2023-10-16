@@ -1563,17 +1563,6 @@ const responsePIDS: IObdPID[] = [
   //added some new pid entries
   {
     mode: modeRealTime,
-    pid: '9D',
-    bytes: 4,
-    name: 'fuelRateGS',
-    description: 'Engine fuel rate',
-    min: 0,
-    max: 3212750.0,
-    unit: 'g/s',
-    convertToUseful: convertEngineFuelRate,
-  },
-  {
-    mode: modeRealTime,
     pid: '61',
     bytes: 1,
     name: 'percentTorque',
