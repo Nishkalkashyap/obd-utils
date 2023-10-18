@@ -1777,7 +1777,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: 'A6',
     bytes: 4,
-    name: 'odo',
+    name: 'odometer',
     description: 'Odometer',
     min: 0,
     max: 429496729.5,
