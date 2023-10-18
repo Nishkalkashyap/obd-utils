@@ -3,3 +3,4 @@ dist
 lib
 bin/src
 package-lock.json
+.npmrc
