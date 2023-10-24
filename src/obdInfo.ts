@@ -35,6 +35,7 @@ function convertPIDSupported(
 ) {
   const hexstring = byteA + byteB + byteC + byteD;
   const pidHex = hexstring.split('');
+  console.log(pidHex);
   const pidStatus: boolean[] = [];
   pidHex.forEach(function (hex) {
     const hexPerm = Hex2Bin(hex).split('');
@@ -42,7 +43,7 @@ function convertPIDSupported(
       pidStatus.push(perm === '1' ? true : false);
     });
   });
-
+  
   return pidStatus;
 }
 
