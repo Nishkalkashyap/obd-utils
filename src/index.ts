@@ -10,6 +10,7 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
   const reply: IParsedOBDResponse = {};
   const response: IParsedOBDResponse[]=[];
   let byteNumber = 0;
+  let response_ready=false;
   let valueArray: any[] = []; //New object
   let pidBytesArray= [0];
   let pidRequested=0;
@@ -25,50 +26,47 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
     response.push(reply);
     return response;
   }
-
   hexString = hexString.replace(/ /g, ''); //Whitespace trimming //Probably not needed anymore?
   valueArray = [];
-
   for (byteNumber; byteNumber < hexString.length; byteNumber += 2) {
     valueArray.push(hexString.substring(byteNumber, byteNumber + 2));
   }
-
   if (valueArray[0] === '41') {
-    
     reply.mode = valueArray[0] as Modes;
     reply.pid = valueArray[1];
-    
     responsePIDS.forEach((pid: IObdPID) => {
-      if (pid.pid === reply.pid) {
-        const numberOfBytes = pid.bytes;
-        pidBytesArray.push(pid.bytes+=2);
-        pidRequested+=1;
+      if (pid.pid === reply.pid && !response_ready) {
+        let numberOfBytes = pid.bytes;
+        if(pidBytesArray.length===1){
+          pidBytesArray.push(pid.bytes+2);
+          pidRequested+=1;
+        }
         reply.name = pid.name;
         reply.unit = pid.unit;
-      if(valueArray.length>6){ //da modificare se cambia la richiesta fatta da app
-        while(valueArray.length>pidBytesArray[pidBytesArray.length-1]){
-          reply.pid=valueArray[pidBytesArray[pidBytesArray.length-1]];
-          responsePIDS.forEach((pid: IObdPID) => {
-          if (pid.pid === reply.pid) {
-            pidBytesArray.push(pidBytesArray[pidBytesArray.length-1]+pid.bytes+1);
-            pidRequested+=1;
+        if(valueArray.length>8){ //da modificare se cambia la richiesta fatta da app
+          while(valueArray.length>pidBytesArray[pidBytesArray.length-1]){
+            reply.pid=valueArray[pidBytesArray[pidBytesArray.length-1]];
+            responsePIDS.forEach((pid: IObdPID) => {
+            if (pid.pid === reply.pid) {
+              pidBytesArray.push(pidBytesArray[pidBytesArray.length-1]+pid.bytes+1);
+              pidRequested+=1;
+            }
+            });
           }
-          });
-        }
-        for (let i=0;i<pidRequested;i++){
+          for (let i=0;i<pidRequested;i++){
             let pidToParse=valueArray.slice(pidBytesArray[i],pidBytesArray[i+1]).toString().replace(/[^A-Za-z0-9]/g, ' ');
             if(pidToParse.startsWith('41'))
-              response.push(parseOBDResponse(pidToParse)[0]);
+             response.push(parseOBDResponse(pidToParse)[0]);
             else
               response.push(parseOBDResponse("41"+pidToParse)[0]);
             }
-        
-      }
-      else{
-        const convertToUseful = pid.convertToUseful;
-        if (!convertToUseful) {
-          return;
+          response_ready=true;
         }
+        else{
+          const convertToUseful = pid.convertToUseful;
+          if (!convertToUseful) {
+            return;
+          }
         
           switch (numberOfBytes) {
             case 1:
@@ -98,8 +96,10 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
               );
               break;
           }
+          
         }  
       }
+      
     });
         
   } else if (valueArray[0] === '43') {
@@ -138,9 +138,11 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
       }
     });
   }
-  if(response.length===0)
+  if(response.length===0){
     response.push(reply);
-  return response;
+    
+  }
+    return response;
 }
 
 export function getPIDInfo(pid: string): IObdPIDDescriptor | null {
