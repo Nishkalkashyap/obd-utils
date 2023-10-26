@@ -8,12 +8,12 @@ import {
 
 export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
   const reply: IParsedOBDResponse = {};
-  const response: IParsedOBDResponse[]=[];
+  const response: IParsedOBDResponse[] = [];
   let byteNumber = 0;
-  let response_ready=false;
+  let response_ready = false;
   let valueArray: any[] = []; //New object
-  let pidBytesArray= [0];
-  let pidRequested=0;
+  const pidBytesArray = [0];
+  let pidRequested = 0;
   if (
     hexString === 'NO DATA' ||
     hexString === 'OK' ||
@@ -36,38 +36,44 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
     reply.pid = valueArray[1];
     responsePIDS.forEach((pid: IObdPID) => {
       if (pid.pid === reply.pid && !response_ready) {
-        let numberOfBytes = pid.bytes;
-        if(pidBytesArray.length===1){
-          pidBytesArray.push(pid.bytes+2);
-          pidRequested+=1;
+        const numberOfBytes = pid.bytes;
+        if (pidBytesArray.length === 1) {
+          pidBytesArray.push(pid.bytes + 2);
+          pidRequested += 1;
         }
         reply.name = pid.name;
         reply.unit = pid.unit;
-        if(valueArray.length>8){ //da modificare se cambia la richiesta fatta da app
-          while(valueArray.length>pidBytesArray[pidBytesArray.length-1]){
-            reply.pid=valueArray[pidBytesArray[pidBytesArray.length-1]];
+        if (valueArray.length > 8) {
+          //da modificare se cambia la richiesta fatta da app
+          while (valueArray.length > pidBytesArray[pidBytesArray.length - 1]) {
+            reply.pid = valueArray[pidBytesArray[pidBytesArray.length - 1]];
             responsePIDS.forEach((pid: IObdPID) => {
-            if (pid.pid === reply.pid) {
-              pidBytesArray.push(pidBytesArray[pidBytesArray.length-1]+pid.bytes+1);
-              pidRequested+=1;
-            }
+              if (pid.pid === reply.pid) {
+                pidBytesArray.push(
+                  pidBytesArray[pidBytesArray.length - 1] + pid.bytes + 1
+                );
+                pidRequested += 1;
+              }
             });
           }
-          for (let i=0;i<pidRequested;i++){
-            let pidToParse=valueArray.slice(pidBytesArray[i],pidBytesArray[i+1]).toString().replace(/[^A-Za-z0-9]/g, ' ');
-            if(pidToParse.startsWith('41'))
-             response.push(parseOBDResponse(pidToParse)[0]);
-            else
-              response.push(parseOBDResponse("41"+pidToParse)[0]);
+          for (let i = 0; i < pidRequested; i++) {
+            const pidToParse = valueArray
+              .slice(pidBytesArray[i], pidBytesArray[i + 1])
+              .toString()
+              .replace(/[^A-Za-z0-9]/g, ' ');
+            if (pidToParse.startsWith('41')) {
+              response.push(parseOBDResponse(pidToParse)[0]);
+            } else {
+              response.push(parseOBDResponse('41' + pidToParse)[0]);
             }
-          response_ready=true;
-        }
-        else{
+          }
+          response_ready = true;
+        } else {
           const convertToUseful = pid.convertToUseful;
           if (!convertToUseful) {
             return;
           }
-        
+
           switch (numberOfBytes) {
             case 1:
               reply.value = convertToUseful(valueArray[2]);
@@ -77,11 +83,11 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
               break;
             case 4:
               reply.value = convertToUseful(
-              valueArray[2],
-              valueArray[3],
-              valueArray[4],
-              valueArray[5]
-            );
+                valueArray[2],
+                valueArray[3],
+                valueArray[4],
+                valueArray[5]
+              );
               break;
             case 8:
               reply.value = convertToUseful(
@@ -96,12 +102,9 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
               );
               break;
           }
-          
-        }  
+        }
       }
-      
     });
-        
   } else if (valueArray[0] === '43') {
     reply.mode = valueArray[0] as Modes;
     responsePIDS.forEach((pid: IObdPID) => {
@@ -138,11 +141,11 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
       }
     });
   }
-  if(response.length===0){
+  if (response.length === 0) {
     response.push(reply);
-    
   }
-    return response;
+
+  return response;
 }
 
 export function getPIDInfo(pid: string): IObdPIDDescriptor | null {
@@ -154,4 +157,3 @@ export function getPIDInfo(pid: string): IObdPIDDescriptor | null {
 export function getAllPIDs(): IObdPIDDescriptor[] {
   return responsePIDS;
 }
-
