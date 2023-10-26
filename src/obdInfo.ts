@@ -632,7 +632,7 @@ const responsePIDS: IObdPID[] = [
     mode: modeRealTime,
     pid: PIDS.INTAKE_AIR_TEMPERATURE_SENSOR,
     bytes: 1,
-    name: 'iat',
+    name: 'temperature',
     description: 'Intake Air Temperature',
     min: -40,
     max: 215,
