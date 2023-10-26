@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 import { Command } from 'commander';
-import { getPIDInfo, parseOBDResponse } from '../src/index';
+import { getPIDInfo,parseOBDResponse } from '../src/index';
 
 const program = new Command();
 
@@ -19,5 +19,6 @@ program
     const parsedResponse = parseOBDResponse(hexString);
     console.log(JSON.stringify(parsedResponse, null, 4));
   });
+
 
 program.parse(process.argv);
