@@ -43,7 +43,7 @@ export function parseOBDResponse(hexString: string): IParsedOBDResponse[] {
         }
         reply.name = pid.name;
         reply.unit = pid.unit;
-        if (valueArray.length > 8) {
+        if (valueArray.length > 6) {
           //da modificare se cambia la richiesta fatta da app
           while (valueArray.length > pidBytesArray[pidBytesArray.length - 1]) {
             reply.pid = valueArray[pidBytesArray[pidBytesArray.length - 1]];
